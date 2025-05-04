@@ -53,7 +53,7 @@ def get_plantuml_themes():
         "amiga", "aws-orange", "black-knight", "bluegray", "blueprint", "carbon-gray",
         "cerulean-outline", "cerulean", "cloudscape-design", "crt-amber", "crt-green",
         "cyborg-outline", "cyborg", "hacker", "lightgray", "mars", "materia-outline",
-        "materia", "metal", "mimeograph", "minty", "mono", "none", "plain", "reddress-darkblue",
+        "materia", "metal", "mono", "none", "plain", "reddress-darkblue",
         "reddress-darkgreen", "reddress-darkorange", "reddress-darkred", "reddress-lightblue",
         "reddress-lightgreen", "reddress-lightorange", "reddress-lightred", "sandstone", "silver",
         "sketchy-outline", "sketchy", "spacelab-white", "spacelab", "sunlust", "superhero-outline",
