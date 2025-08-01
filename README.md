@@ -58,13 +58,12 @@ Designing UML diagrams shouldn't be a bottleneck. Structura-AI empowers you to:
 
 ## 🔄 How It Works
 
-```mermaid
 flowchart TD
     A[User Prompt in Natural Language] --> B[Frontend (React.js)]
     B --> C[Flask Backend API]
-    C --> D[g4f API (GPT-based NLP Model)]
+    C --> D[g4f API (GPT-based NLP)]
     D --> E[Structured UML Syntax]
     E --> F[Graphviz Renderer]
-    F --> G[UML Diagram Output (PNG)]
+    F --> G[UML Diagram Output]
     G --> B
 
