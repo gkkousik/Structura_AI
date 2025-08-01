@@ -1,9 +1,9 @@
-# 🧠 Structura-AI – AI-Powered UML Diagram Generator
+<img width="1888" height="798" alt="image" src="https://github.com/user-attachments/assets/988d0e68-fc3a-48c7-9db5-273719704829" /># 🧠 Structura-AI – AI-Powered UML Diagram Generator
 
 Turn your thoughts into software design instantly.  
 Structura-AI is a full-stack web application that **automatically generates UML diagrams** (Class, Sequence, Use Case) from **natural language prompts** using GPT-based AI and renders them using Graphviz.
 
-![Structura-AI Demo](https://your-demo-link.com/preview.gif) <!-- optional: demo gif -->
+![Structura-AI Demo](structura-ai.onrender.com) <!-- optional: demo gif -->
 
 ---
 
@@ -47,9 +47,11 @@ Structura-AI is built for:
 > Replace with real images or links to hosted screenshots
 
 - **Prompt Input Interface**
-  
-- **Generated UML Diagram Preview**  
-- **Responsive Design on Desktop & Mobile**
+  <img width="1898" height="840" alt="Screenshot 2025-08-02 020119" src="https://github.com/user-attachments/assets/6860d417-0b0d-4160-8986-03082d7f100d" />
+
+- **Generated UML Diagram Preview**
+  <img width="1888" height="798" alt="Screenshot 2025-08-02 020319" src="https://github.com/user-attachments/assets/523d76aa-7c1a-4225-a3bc-ecd8592da3b9" />
+
 
 ---
 
@@ -63,19 +65,3 @@ Structura-AI is built for:
 
 ---
 
-## 🔧 Local Setup
-
-```bash
-# Clone repo
-git clone https://github.com/your-username/structura-ai.git
-cd structura-ai
-
-# Setup backend
-cd backend
-pip install -r requirements.txt
-python app.py
-
-# Setup frontend (in another terminal)
-cd frontend
-npm install
-npm start
