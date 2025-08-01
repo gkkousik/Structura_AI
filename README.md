@@ -11,7 +11,7 @@ Structura-AI is a full-stack web application that **automatically generates UML 
 ## 🌐 Live Demo
 
 🚀 Access the application here → **[https://structura-ai.onrender.com/](https://structura-ai.onrender.com/)**  
-🟢 No account required – Try generating your first diagram now!
+🟢 Try generating your first diagram now!
 
 ---
 
@@ -55,9 +55,10 @@ Designing UML diagrams shouldn't be a bottleneck. Structura-AI empowers you to:
 
 | Prompt Input Panel | UML Diagram Output | Mobile View |
 |--------------------|--------------------|-------------|
-| ![](<img width="522" height="574" alt="Screenshot 2025-08-02 021239" src="https://github.com/user-attachments/assets/03867456-5a78-419f-b943-5c426df9790b" />
-)         | ![](<img width="940" height="764" alt="Screenshot 2025-08-02 021256" src="https://github.com/user-attachments/assets/13b9258d-0963-4149-88b6-c6f3ea609538" />
-)         | ![](link3)  |
+| (<img width="522" height="574" alt="Screenshot 2025-08-02 021239" src="https://github.com/user-attachments/assets/03867456-5a78-419f-b943-5c426df9790b" />
+)         | (<img width="940" height="764" alt="Screenshot 2025-08-02 021256" src="https://github.com/user-attachments/assets/13b9258d-0963-4149-88b6-c6f3ea609538" />
+)         | (![WhatsApp Image 2025-08-02 at 02 17 10_127fff52](https://github.com/user-attachments/assets/ac057a4b-0f00-4012-a351-41274002a4f4)
+)  |
 
 ---
 
