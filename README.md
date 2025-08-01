@@ -1,9 +1,9 @@
-<img width="1888" height="798" alt="image" src="https://github.com/user-attachments/assets/988d0e68-fc3a-48c7-9db5-273719704829" /># 🧠 Structura-AI – AI-Powered UML Diagram Generator
+# 🧠 Structura-AI – AI-Powered UML Diagram Generator
 
 Turn your thoughts into software design instantly.  
 Structura-AI is a full-stack web application that **automatically generates UML diagrams** (Class, Sequence, Use Case) from **natural language prompts** using GPT-based AI and renders them using Graphviz.
 
-![Structura-AI Demo](structura-ai.onrender.com) <!-- optional: demo gif -->
+![Structura-AI Demo](https://structura-ai.onrender.com) <!-- optional: demo gif -->
 
 ---
 
