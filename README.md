@@ -1,21 +1,26 @@
 # 🧠 Structura-AI – AI-Powered UML Diagram Generator
 
-Turn your thoughts into software design instantly.  
-Structura-AI is a full-stack web application that **automatically generates UML diagrams** (Class, Sequence, Use Case) from **natural language prompts** using GPT-based AI and renders them using Graphviz.
+Turn your thoughts into clean software design, instantly.  
+Structura-AI is a full-stack web application that **automatically generates UML diagrams** (Class, Use Case, Sequence) from **natural language prompts** using GPT-based AI and Graphviz rendering.
 
-![Structura-AI Demo](https://structura-ai.onrender.com/) <!-- optional: demo gif -->
+![UML Banner](https://your-image-or-banner-url.com) <!-- Optional banner image -->
 
 ---
 
-## 🚀 Why Structura-AI?
+## 🌐 Live Demo
 
-Tired of dragging boxes and arrows manually?
+🚀 Access the application here → **[https://structura-ai.onrender.com/](https://structura-ai.onrender.com/)**  
+🟢 No account required – Try generating your first diagram now!
 
-Structura-AI is built for:
-- 🧑‍💻 Developers who want faster design iterations
-- 🎓 Students learning object-oriented modeling
-- 📊 Analysts and PMs needing visual architecture from requirements
-- 💡 Startups & teams building rapid prototypes
+---
+
+## 📌 Why Structura-AI?
+
+Designing UML diagrams shouldn't be a bottleneck. Structura-AI empowers you to:
+- ✍️ **Describe in plain English**, and get fully-structured UML diagrams instantly.
+- 🛠️ **Reduce manual effort by ~90%** in the software design phase.
+- 🌍 Enable **non-technical stakeholders** to visualize system architecture.
+- ⚙️ Enhance **software modeling in education, startups, and agile teams**.
 
 ---
 
@@ -23,45 +28,37 @@ Structura-AI is built for:
 
 | Layer          | Technologies                           |
 |----------------|----------------------------------------|
-| Frontend       | React.js, Tailwind CSS                 |
-| Backend        | Python, Flask, RESTful APIs            |
-| AI Integration | GPT-based NLP via g4f API              |
-| Rendering      | Graphviz for UML diagram generation    |
-| Auth & Deploy  | Firebase Authentication, Render, GitHub Actions |
+| **Frontend**   | React.js, Tailwind CSS                 |
+| **Backend**    | Python (Flask), RESTful APIs           |
+| **AI Engine**  | GPT-based NLP via g4f API              |
+| **Rendering**  | Graphviz for UML diagram generation    |
+| **Auth & DevOps** | Firebase Auth, Render.com, GitHub Actions |
 
 ---
 
 ## 🧩 Features
 
-✅ Generate Class, Sequence, and Use Case diagrams from plain English  
-✅ Real-time diagram rendering using Graphviz  
-✅ Download diagrams as PNG  
-✅ Secure login via Firebase  
-✅ CI/CD with GitHub Actions  
-✅ Deployed & accessible on all browsers
+- 🧠 **AI-Powered UML Generation** (Class, Use Case, Sequence)
+- ⏱️ **Real-Time Rendering** via Graphviz in < 20 seconds
+- 📥 **Download Diagrams** in PNG format
+- 🔐 **User Authentication** with Firebase
+- 🌍 **Responsive UI** – Works on desktops, tablets, and phones
+- 🚀 **CI/CD Integrated** – Auto-deploy with GitHub Actions
+- 📊 **Google Analytics** for tracking user engagement
 
 ---
 
-## 📸 Screenshots
+## 🖼️ Screenshots
 
-> Replace with real images or links to hosted screenshots
+> *(Insert actual screenshots or links here)*
 
-- **Prompt Input Interface**
-  <img width="1898" height="840" alt="Screenshot 2025-08-02 020119" src="https://github.com/user-attachments/assets/6860d417-0b0d-4160-8986-03082d7f100d" />
-
-- **Generated UML Diagram Preview**
-  <img width="1888" height="798" alt="Screenshot 2025-08-02 020319" src="https://github.com/user-attachments/assets/523d76aa-7c1a-4225-a3bc-ecd8592da3b9" />
-
-
----
-
-## 🧪 How It Works
-
-1. **User** enters a natural language description (e.g., "A customer places an order that contains items")
-2. **Flask Backend** sends prompt to `g4f API` → GPT model parses relationships/entities
-3. **Structured UML Syntax** is generated
-4. **Graphviz** renders the diagram and sends it back to frontend
-5. **React.js UI** displays the live diagram
+| Prompt Input Panel | UML Diagram Output | Mobile View |
+|--------------------|--------------------|-------------|
+| ![](<img width="522" height="574" alt="Screenshot 2025-08-02 021239" src="https://github.com/user-attachments/assets/03867456-5a78-419f-b943-5c426df9790b" />
+)         | ![](<img width="940" height="764" alt="Screenshot 2025-08-02 021256" src="https://github.com/user-attachments/assets/13b9258d-0963-4149-88b6-c6f3ea609538" />
+)         | ![](link3)  |
 
 ---
+
+## 🔄 How It Works
 
