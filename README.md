@@ -3,8 +3,7 @@
 Turn your thoughts into clean software design, instantly.  
 Structura-AI is a full-stack web application that **automatically generates UML diagrams** (Class, Use Case, Sequence) from **natural language prompts** using GPT-based AI and Graphviz rendering.
 
-![UML Banner](<img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/54a0ad77-f32a-4273-8847-2a87d9314807" />
-) <!-- Optional banner image -->
+![UML Banner](https://github.com/user-attachments/assets/54a0ad77-f32a-4273-8847-2a87d9314807)
 
 ---
 
@@ -27,13 +26,13 @@ Designing UML diagrams shouldn't be a bottleneck. Structura-AI empowers you to:
 
 ## ⚙️ Tech Stack
 
-| Layer          | Technologies                           |
-|----------------|----------------------------------------|
-| **Frontend**   | React.js, Tailwind CSS                 |
-| **Backend**    | Python (Flask), RESTful APIs           |
-| **AI Engine**  | GPT-based NLP via g4f API              |
-| **Rendering**  | Graphviz for UML diagram generation    |
-| **Auth & DevOps** | Firebase Auth, Render.com, GitHub Actions |
+| Layer             | Technologies                            |
+|-------------------|------------------------------------------|
+| **Frontend**       | React.js, Tailwind CSS                   |
+| **Backend**        | Python (Flask), RESTful APIs             |
+| **AI Engine**      | GPT-based NLP via g4f API                |
+| **Rendering**      | Graphviz for UML diagram generation      |
+| **Auth & DevOps**  | Firebase Auth, Render.com, GitHub Actions |
 
 ---
 
@@ -51,16 +50,20 @@ Designing UML diagrams shouldn't be a bottleneck. Structura-AI empowers you to:
 
 ## 🖼️ Screenshots
 
-> *(Insert actual screenshots or links here)*
-
-| Prompt Input Panel | UML Diagram Output | Mobile View |
-|--------------------|--------------------|-------------|
-| (<img width="522" height="574" alt="Screenshot 2025-08-02 021239" src="https://github.com/user-attachments/assets/03867456-5a78-419f-b943-5c426df9790b" />
-)         | (<img width="940" height="764" alt="Screenshot 2025-08-02 021256" src="https://github.com/user-attachments/assets/13b9258d-0963-4149-88b6-c6f3ea609538" />
-)         | (![WhatsApp Image 2025-08-02 at 02 17 10_127fff52](https://github.com/user-attachments/assets/ac057a4b-0f00-4012-a351-41274002a4f4)
-)  |
+| Prompt Input Panel                                                                                   | UML Diagram Output                                                                                   | Mobile View                                                                                             |
+|------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
+| ![Prompt Input](https://github.com/user-attachments/assets/03867456-5a78-419f-b943-5c426df9790b)     | ![Diagram Output](https://github.com/user-attachments/assets/13b9258d-0963-4149-88b6-c6f3ea609538)    | ![Mobile View](https://github.com/user-attachments/assets/ac057a4b-0f00-4012-a351-41274002a4f4)          |
 
 ---
 
 ## 🔄 How It Works
 
+```mermaid
+graph TD
+    A[User Prompt in Natural Language] --> B[Frontend (React.js)]
+    B --> C[Flask Backend API]
+    C --> D[g4f API (GPT-based NLP)]
+    D --> E[Structured UML Syntax]
+    E --> F[Graphviz Renderer]
+    F --> G[UML Diagram Output]
+    G --> B 
