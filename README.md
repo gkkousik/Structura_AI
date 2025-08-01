@@ -3,7 +3,8 @@
 Turn your thoughts into clean software design, instantly.  
 Structura-AI is a full-stack web application that **automatically generates UML diagrams** (Class, Use Case, Sequence) from **natural language prompts** using GPT-based AI and Graphviz rendering.
 
-<img src="https://github.com/user-attachments/assets/54a0ad77-f32a-4273-8847-2a87d9314807" alt="UML Banner" height="200"/>
+<img src="https://github.com/user-attachments/assets/54a0ad77-f32a-4273-8847-2a87d9314807" alt="UML Banner" width="800" height="400"/>
+
 
 
 
