@@ -46,7 +46,8 @@ Structura-AI is built for:
 
 > Replace with real images or links to hosted screenshots
 
-- **Prompt Input Interface**  
+- **Prompt Input Interface**
+  
 - **Generated UML Diagram Preview**  
 - **Responsive Design on Desktop & Mobile**
 
