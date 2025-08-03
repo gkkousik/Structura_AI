@@ -1,33 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7CHN2YWSKE"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-7CHN2YWSKE');
-</script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7CHN2YWSKE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7CHN2YWSKE');
+  </script>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>UML Generator - Create UML Diagrams with AI</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    /* Floating wave animation on hero heading */
+    @keyframes wave {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .wave {
+      display: inline-block;
+      animation: wave 2.5s ease-in-out infinite;
+      animation-delay: calc(var(--i) * 0.2s);
+    }
+
+    /* Fade-in slide-up animation */
+    @keyframes fadeSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fade-slide-up {
+      animation: fadeSlideUp 0.8s ease forwards;
+      opacity: 0;
+    }
+
+    /* Parallax effect container */
+    .parallax {
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 0.1s ease-out;
+    }
+  </style>
 </head>
-<body class="bg-white">
+<body class="bg-white text-gray-900 selection:bg-green-500 selection:text-white">
 
   <!-- Header -->
   <header class="fixed w-full bg-white shadow-sm z-50">
     <nav class="container mx-auto px-6 py-3">
       <div class="flex justify-between items-center">
         <div class="flex items-center">
-          <span class="text-2xl font-bold text-green-600">Structura AI</span>
+          <span class="text-2xl font-extrabold text-green-600 cursor-default select-none">
+            Structura AI
+          </span>
         </div>
         <div class="hidden md:flex items-center space-x-8">
-          <a href="#features" class="text-gray-600 hover:text-indigo-600">Features</a>
-          <a href="#pricing" class="text-gray-600 hover:text-indigo-600">Achievements</a>
-          <a href="/login" class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700">Try Now</a>
+          <a href="#features" class="text-gray-600 hover:text-indigo-600 transition-colors duration-300">Features</a>
+          <a href="#achievements" class="text-gray-600 hover:text-indigo-600 transition-colors duration-300">Achievements</a>
+          <a href="/login" class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-300">Try Now</a>
         </div>
       </div>
     </nav>
@@ -38,23 +76,62 @@
     <div class="container mx-auto px-6">
       <div class="flex flex-col md:flex-row items-center">
         <div class="md:w-1/2 md:pr-12">
-          <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Generate UML Diagrams Instantly with AI
+          <h1 id="hero-heading" class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+            <!-- Each letter wave animated -->
+            <span class="wave" style="--i:0;">G</span>
+            <span class="wave" style="--i:1;">e</span>
+            <span class="wave" style="--i:2;">n</span>
+            <span class="wave" style="--i:3;">e</span>
+            <span class="wave" style="--i:4;">r</span>
+            <span class="wave" style="--i:5;">a</span>
+            <span class="wave" style="--i:6;">t</span>
+            <span class="wave" style="--i:7;">e</span>
+            <span> </span>
+            <span class="wave" style="--i:8;">U</span>
+            <span class="wave" style="--i:9;">M</span>
+            <span class="wave" style="--i:10;">L</span>
+            <span> </span>
+            <span class="wave" style="--i:11;">D</span>
+            <span class="wave" style="--i:12;">i</span>
+            <span class="wave" style="--i:13;">a</span>
+            <span class="wave" style="--i:14;">g</span>
+            <span class="wave" style="--i:15;">r</span>
+            <span class="wave" style="--i:16;">a</span>
+            <span class="wave" style="--i:17;">m</span>
+            <span class="wave" style="--i:18;">s</span>
+            <br />
+            <span class="wave" style="--i:19;">I</span>
+            <span class="wave" style="--i:20;">n</span>
+            <span class="wave" style="--i:21;">s</span>
+            <span class="wave" style="--i:22;">t</span>
+            <span class="wave" style="--i:23;">a</span>
+            <span class="wave" style="--i:24;">n</span>
+            <span class="wave" style="--i:25;">t</span>
+            <span class="wave" style="--i:26;">l</span>
+            <span class="wave" style="--i:27;">y</span>
+            <span> </span>
+            <span class="wave" style="--i:28;">w</span>
+            <span class="wave" style="--i:29;">i</span>
+            <span class="wave" style="--i:30;">t</span>
+            <span class="wave" style="--i:31;">h</span>
+            <span> </span>
+            <span class="wave" style="--i:32;">A</span>
+            <span class="wave" style="--i:33;">I</span>
           </h1>
-          <p class="text-lg text-gray-600 mb-8">
+          <p class="text-lg text-gray-600 mb-8 max-w-xl leading-relaxed">
             Transform Your Ideas into Professional UML Diagrams in Seconds with Our AI-Powered Generator. Streamline Software Design and Documentation Effortlessly.
           </p>
           <div class="flex space-x-4">
-            <a href="/login" class="bg-green-600 text-white px-8 py-3 rounded-md hover:bg-indigo-700 text-lg font-semibold">
+            <a href="/login" class="bg-green-600 text-white px-8 py-3 rounded-md hover:bg-indigo-700 transition transform hover:scale-105 duration-300 font-semibold text-lg shadow-md">
               Try Now
             </a>
-            <a href="#features" class="border border-gray-300 text-gray-700 px-8 py-3 rounded-md hover:border-green-600 hover:text-indigo-600 text-lg font-semibold">
+            <a href="#features" class="border border-gray-300 text-gray-700 px-8 py-3 rounded-md hover:border-green-600 hover:text-indigo-600 transition transform hover:scale-105 duration-300 font-semibold text-lg">
               Learn More
             </a>
           </div>
         </div>
-        <div class="md:w-1/2 mt-12 md:mt-0">
-          <img src="{{ url_for('static', filename='com_logo.png') }}" alt="UML Diagram Example" width="400px" class="rounded-lg" style="box-shadow: 0 4px 8px rgba(0, 130, 0, 0.6);">
+        <div class="md:w-1/2 mt-12 md:mt-0 overflow-hidden">
+          <img src="{{ url_for('static', filename='com_logo.png') }}" alt="UML Diagram Example" width="400" class="rounded-lg parallax" style="box-shadow: 0 4px 8px rgba(0, 130, 0, 0.6);" />
         </div>
       </div>
     </div>
@@ -63,12 +140,14 @@
   <!-- Features Section -->
   <section id="features" class="py-20 bg-white">
     <div class="container mx-auto px-6">
-      <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Powerful Features</h2>
+      <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-12 fade-slide-up" style="animation-delay: 0.2s;">
+        Powerful Features
+      </h2>
       <div class="grid md:grid-cols-3 gap-8">
         <!-- Feature 1 -->
-        <div class="p-6 bg-white rounded-lg shadow-md">
-          <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="p-6 bg-white rounded-lg shadow-md fade-slide-up" style="animation-delay: 0.4s;">
+          <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 transition-colors duration-300 group hover:bg-green-200">
+            <svg class="w-6 h-6 text-green-600 group-hover:text-indigo-600 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
             </svg>
           </div>
@@ -76,9 +155,9 @@
           <p class="text-gray-600">Create Professional UML Diagrams in Seconds with Cutting-Edge AI Technology.</p>
         </div>
         <!-- Feature 2 -->
-        <div class="p-6 bg-white rounded-lg shadow-md">
-          <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="p-6 bg-white rounded-lg shadow-md fade-slide-up" style="animation-delay: 0.6s;">
+          <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 transition-colors duration-300 group hover:bg-green-200">
+            <svg class="w-6 h-6 text-green-600 group-hover:text-indigo-600 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/>
             </svg>
           </div>
@@ -86,9 +165,9 @@
           <p class="text-gray-600">Support for all UML diagram types including class, sequence, and use case diagrams.</p>
         </div>
         <!-- Feature 3 -->
-        <div class="p-6 bg-white rounded-lg shadow-md">
-          <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="p-6 bg-white rounded-lg shadow-md fade-slide-up" style="animation-delay: 0.8s;">
+          <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 transition-colors duration-300 group hover:bg-green-200">
+            <svg class="w-6 h-6 text-green-600 group-hover:text-indigo-600 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
             </svg>
           </div>
@@ -100,28 +179,30 @@
   </section>
 
   <!-- Achievements Section -->
-<section id="achievements" class="py-20 bg-gray-50">
-  <div class="container mx-auto px-6">
-    <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Our Achievements</h2>
-    <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto text-center">
-      <!-- Users Created -->
-      <div class="bg-white rounded-lg shadow-md p-8">
-        <h3 class="text-4xl font-bold text-indigo-600 mb-2">5+</h3>
-        <p class="text-gray-700 text-lg">UML Diagrams Supported</p>
-      </div>
-      <!-- Diagrams Generated -->
-      <div class="bg-white rounded-lg shadow-md p-8">
-        <h3 class="text-4xl font-bold text-indigo-600 mb-2">120+</h3>
-        <p class="text-gray-700 text-lg">UML Diagrams Generated</p>
-      </div>
-      <!-- Countries Reached -->
-      <div class="bg-white rounded-lg shadow-md p-8">
-        <h3 class="text-4xl font-bold text-indigo-600 mb-2">150+</h3>
-        <p class="text-gray-700 text-lg">Hours Saved</p>
+  <section id="achievements" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-12 fade-slide-up" style="animation-delay: 1s;">
+        Our Achievements
+      </h2>
+      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto text-center">
+        <!-- Users Created -->
+        <div class="bg-white rounded-lg shadow-md p-8 fade-slide-up" style="animation-delay: 1.2s;">
+          <h3 class="text-4xl font-bold text-indigo-600 mb-2">5+</h3>
+          <p class="text-gray-700 text-lg">UML Diagrams Supported</p>
+        </div>
+        <!-- Diagrams Generated -->
+        <div class="bg-white rounded-lg shadow-md p-8 fade-slide-up" style="animation-delay: 1.4s;">
+          <h3 class="text-4xl font-bold text-indigo-600 mb-2">120+</h3>
+          <p class="text-gray-700 text-lg">UML Diagrams Generated</p>
+        </div>
+        <!-- Countries Reached -->
+        <div class="bg-white rounded-lg shadow-md p-8 fade-slide-up" style="animation-delay: 1.6s;">
+          <h3 class="text-4xl font-bold text-indigo-600 mb-2">150+</h3>
+          <p class="text-gray-700 text-lg">Hours Saved</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- Footer -->
   <footer class="bg-gray-900 text-white py-12">
@@ -129,37 +210,65 @@
       <div class="grid md:grid-cols-4 gap-8">
         <div>
           <h4 class="text-xl font-bold mb-4">Structura AI</h4>
-          <p class="text-gray-400">Create Professional UML Diagrams Effortlessly with Advanced AI Technology.</p>
+          <p class="text-gray-400 leading-relaxed">Create Professional UML Diagrams Effortlessly with Advanced AI Technology.</p>
         </div>
         <div>
           <h5 class="font-semibold mb-4">Product</h5>
           <ul class="space-y-2">
-            <li><a href="#features" class="text-gray-400 hover:text-white">Features</a></li>
-            <li><a href="#pricing" class="text-gray-400 hover:text-white">Achievements</a></li>
-            <li><a href="/login" class="text-gray-400 hover:text-white">Try Now</a></li>
+            <li><a href="#features" class="text-gray-400 hover:text-white transition-colors duration-300">Features</a></li>
+            <li><a href="#achievements" class="text-gray-400 hover:text-white transition-colors duration-300">Achievements</a></li>
+            <li><a href="/login" class="text-gray-400 hover:text-white transition-colors duration-300">Try Now</a></li>
           </ul>
         </div>
         <div>
           <h5 class="font-semibold mb-4">Company</h5>
           <ul class="space-y-2">
-            <li><a href="#" class="text-gray-400 hover:text-white">About</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Blog</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
           </ul>
         </div>
         <div>
           <h5 class="font-semibold mb-4">Legal</h5>
           <ul class="space-y-2">
-            <li><a href="#" class="text-gray-400 hover:text-white">Privacy</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white">Terms</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Privacy</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Terms</a></li>
           </ul>
         </div>
       </div>
-      <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+      <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 select-none">
         <p>&copy; 2025 Structura AI. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
+  <script>
+    // Fade slide up elements on scroll
+    const faders = document.querySelectorAll('.fade-slide-up');
+    const options = { threshold: 0.1 };
+
+    const appearOnScroll = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+          entry.target.style.animationPlayState = 'running';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+
+    // Parallax effect on hero image
+    const parallax = document.querySelector('.parallax');
+    window.addEventListener('mousemove', (e) => {
+      const x = (window.innerWidth / 2 - e.clientX) / 40;
+      const y = (window.innerHeight / 2 - e.clientY) / 40;
+      parallax.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    });
+  </script>
 </body>
 </html>
