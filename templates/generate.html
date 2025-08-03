@@ -1,200 +1,179 @@
- 
-    
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7CHN2YWSKE"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7CHN2YWSKE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7CHN2YWSKE');
+  </script>
 
-  gtag('config', 'G-7CHN2YWSKE');
-</script>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>UML Diagram Generator</title>
-        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-        <style>
-            .fade-in {
-                animation: fadeIn 1s ease-in-out;
-            }
-            @keyframes fadeIn {
-                0% { opacity: 0; }
-                100% { opacity: 1; }
-            }
-        </style>
-    </head>
-    <body class="bg-gray-100 min-h-screen p-8">
-        <div class="max-w-6xl mx-auto grid grid-cols-6  space-x-8">
-            <!-- Input Form Section -->
-            <div class="bg-white rounded-lg col-span-2 shadow-md p-6">
-                <h1 class="text-3xl font-bold text-gray-800 mb-8">Professional UML Diagram Generation</h1>
-                <form id="diagramForm" class="space-y-6">
-                    <div>
-                        <label for="project_name" class="block text-sm font-medium text-gray-700">Project Title</label>
-                        <input type="text" id="project_name" name="project_name" required
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
-                    </div>
-                    
-                    <div>
-                        <label for="diagram_type" class="block text-sm font-medium text-gray-700">Diagram Type</label>
-                        <select id="diagram_type" name="diagram_type" required
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            {% for type in diagram_types %}
-                            <option value="{{ type }}">{{ type }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-    
-                    <div>
-                        <label for="theme" class="block text-sm font-medium text-gray-700">Theme</label>
-                        <select id="theme" name="theme"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            <option value="">Default Theme</option>
-                            {% for theme in themes %}
-                            <option value="{{ theme }}">{{ theme }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    
-                    <button type="submit" 
-                            class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                        Generate Diagram
-                    </button>
-                </form>
-            </div>
-            
-            <!-- Results Section -->
-            <div id="results" class=" col-span-4 place-content-center     space-y-6">
-                <div class="bg-white rounded-lg shadow-md p-6 ">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-xl font-semibold text-gray-800">Generated Diagram</h2>
-                        <button id="downloadButton" 
-                                class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                            Download Diagram
-                        </button>
-                    </div>
-                    <img id="diagram" class="max-w-full h-auto fade-in " alt="Generated UML Diagram">
-                </div>
-                
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-xl font-semibold text-gray-800">PlantUML Syntax</h2>
-                        <button id="copyButton" 
-                                class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                            Copy Code
-                        </button>
-                    </div>
-                    <pre id="syntax" class="bg-gray-50 p-4 rounded-md overflow-x-auto"></pre>
-                </div>
-            </div>
-    
-            <div id="loading" class="hidden flex w-full justify-center items-center space-x-2 place-self-center">
-                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
-                <span class="text-gray-600">Generating diagram...</span>
-            </div>
-    
-            <div id="error" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-8">
-                <span id="errorMessage"></span>
-            </div>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UML Diagram Generator · Structura AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+
+  <style>
+    /* Glass panel effect */
+    .glass {
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    /* Fade-in utility */
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards;
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* Button hover scale */
+    .btn-transition:hover {
+      transform: scale(1.03);
+      transition: transform 0.2s ease;
+    }
+
+    /* Notification toast */
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: #16a34a;
+      color: #fff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 0.5rem;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 50;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-green-50 to-white min-h-screen py-8 font-sans">
+
+  <div class="container max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8">
+    <!-- Input Panel -->
+    <div class="glass md:col-span-2 rounded-xl p-8 space-y-6 fade-in">
+      <h2 class="text-2xl font-bold text-gray-800">Generate UML Diagram</h2>
+      <form id="diagramForm" class="space-y-4">
+        <div>
+          <label for="project_name" class="block text-sm font-medium text-gray-700">Project Title</label>
+          <input type="text" id="project_name" name="project_name" required
+            class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 transition" />
         </div>
-    
-    
-      
-    
-        <!-- Success Pop-up Messages -->
-        <div id="message" class="fixed bottom-5 right-5 bg-green-500 text-white p-4 rounded-lg shadow-md hidden">
-            <span id="messageText"></span>
+        <div>
+          <label for="diagram_type" class="block text-sm font-medium text-gray-700">Diagram Type</label>
+          <select id="diagram_type" name="diagram_type" required
+            class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+            {% for type in diagram_types %}<option value="{{ type }}">{{ type }}</option>{% endfor %}
+          </select>
         </div>
-    
-        <script>
-            document.getElementById('diagramForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                const loading = document.getElementById('loading');
-                const error = document.getElementById('error');
-                const results = document.getElementById('results');
-                const message = document.getElementById('message');
-                const messageText = document.getElementById('messageText');
-                
-                // Show loading, hide other sections
-                loading.classList.remove('hidden');
-                error.classList.add('hidden');
-                results.classList.add('hidden');
-                
-                try {
-                    const formData = new FormData(e.target);
-                    const response = await fetch('/generate', {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    const data = await response.json();
-                    
-                    if (response.ok) {
-                        // Update diagram and syntax
-                        document.getElementById('diagram').src = `data:image/png;base64,${data.diagram}`;
-                        document.getElementById('syntax').textContent = data.syntax;
-                        results.classList.remove('hidden');
-                        messageText.textContent = "Diagram generated successfully!";
-                        message.classList.remove('hidden');
-                        setTimeout(() => message.classList.add('hidden'), 3000);
-                    } else {
-                        throw new Error(data.error || 'Failed to generate diagram');
-                    }
-                } catch (err) {
-                    error.classList.remove('hidden');
-                    document.getElementById('errorMessage').textContent = err.message;
-                } finally {
-                    loading.classList.add('hidden');
-                }
-            });
-    
-            // Copy PlantUML code button
-            document.getElementById('copyButton').addEventListener('click', async () => {
-                const syntax = document.getElementById('syntax').textContent;
-                try {
-                    await navigator.clipboard.writeText(syntax);
-                    const button = document.getElementById('copyButton');
-                    button.textContent = 'Copied!';
-                    button.classList.remove('bg-blue-600', 'hover:bg-blue-700');
-                    button.classList.add('bg-green-600', 'hover:bg-green-700');
-                    setTimeout(() => {
-                        button.textContent = 'Copy Code';
-                        button.classList.remove('bg-green-600', 'hover:bg-green-700');
-                        button.classList.add('bg-blue-600', 'hover:bg-blue-700');
-                    }, 2000);
-                    
-                    // Show success message
-                    const message = document.getElementById('message');
-                    const messageText = document.getElementById('messageText');
-                    messageText.textContent = "Code copied to clipboard!";
-                    message.classList.remove('hidden');
-                    setTimeout(() => message.classList.add('hidden'), 3000);
-                } catch (err) {
-                    console.error('Failed to copy text:', err);
-                }
-            });
-    
-            // Download diagram button
-            document.getElementById('downloadButton').addEventListener('click', () => {
-                const img = document.getElementById('diagram');
-                const link = document.createElement('a');
-                link.download = 'diagram.png';
-                link.href = img.src;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                // Show success message
-                const message = document.getElementById('message');
-                const messageText = document.getElementById('messageText');
-                messageText.textContent = "Diagram downloaded successfully!";
-                message.classList.remove('hidden');
-                setTimeout(() => message.classList.add('hidden'), 3000);
-            });
-        </script>
-    </body>
-    </html>
+        <div>
+          <label for="theme" class="block text-sm font-medium text-gray-700">Theme</label>
+          <select id="theme" name="theme"
+            class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+            <option value="">Default Theme</option>
+            {% for theme in themes %}<option value="{{ theme }}">{{ theme }}</option>{% endfor %}
+          </select>
+        </div>
+        <button type="submit"
+          class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold btn-transition">Generate</button>
+      </form>
+      <div id="error" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded-lg">
+        <span id="errorMessage"></span>
+      </div>
+    </div>
+
+    <!-- Results / Loader Panel -->
+    <div class="space-y-6 md:col-span-3">
+      <div id="loading" class="hidden flex items-center justify-center space-x-3">
+        <div class="animate-spin h-8 w-8 border-4 border-t-4 border-green-600 rounded-full"></div>
+        <span class="text-gray-600 font-medium">Generating diagram...</span>
+      </div>
+
+      <div id="results" class="hidden space-y-6 fade-in">
+        <div class="glass rounded-xl p-6 shadow-md">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-semibold text-gray-800">Generated Diagram</h3>
+            <button id="downloadButton"
+              class="bg-indigo-600 text-white px-4 py-2 rounded-lg btn-transition">Download</button>
+          </div>
+          <img id="diagram" class="max-w-full h-auto rounded-lg border" alt="UML Diagram">
+        </div>
+
+        <div class="glass rounded-xl p-6 shadow-md">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-semibold text-gray-800">PlantUML Syntax</h3>
+            <button id="copyButton"
+              class="bg-indigo-600 text-white px-4 py-2 rounded-lg btn-transition">Copy Code</button>
+          </div>
+          <pre id="syntax" class="bg-gray-100 p-4 rounded-lg overflow-x-auto"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="message" class="toast"><span id="messageText"></span></div>
+
+  <script>
+    const form = document.getElementById('diagramForm');
+    const loading = document.getElementById('loading');
+    const results = document.getElementById('results');
+    const errorBox = document.getElementById('error');
+    const errorMsg = document.getElementById('errorMessage');
+    const toast = document.getElementById('message');
+    const toastText = document.getElementById('messageText');
+    const diagramImg = document.getElementById('diagram');
+    const syntaxPre = document.getElementById('syntax');
+
+    function showToast(text) {
+      toastText.textContent = text;
+      toast.style.display = 'block';
+      setTimeout(() => toast.style.display = 'none', 3000);
+    }
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      loading.classList.remove('hidden');
+      errorBox.classList.add('hidden');
+      results.classList.add('hidden');
+
+      try {
+        const res = await fetch('/generate', { method: 'POST', body: new FormData(form) });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Generation failed');
+        diagramImg.src = `data:image/png;base64,${data.diagram}`;
+        syntaxPre.textContent = data.syntax;
+        results.classList.remove('hidden');
+        showToast('Diagram generated successfully!');
+      } catch (err) {
+        errorMsg.textContent = err.message;
+        errorBox.classList.remove('hidden');
+      } finally {
+        loading.classList.add('hidden');
+      }
+    });
+
+    document.getElementById('copyButton').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(syntaxPre.textContent);
+        showToast('Code copied to clipboard!');
+      } catch {
+        showToast('Failed to copy code');
+      }
+    });
+
+    document.getElementById('downloadButton').addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = 'diagram.png';
+      link.href = diagramImg.src;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('Diagram downloaded!');
+    });
+  </script>
+</body>
+</html>
