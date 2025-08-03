@@ -1,81 +1,165 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth bg-gray-50">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Structura AI — UML Generator with AI</title>
+  <title>Structura AI – UML Generator</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+
   <style>
-    .typing {
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: 0.15em solid #22c55e;
-      font-weight: bold;
-      font-size: 2.5rem;
-      animation: typing 3s steps(40, end) infinite,
-                 blink-caret 0.8s step-end infinite;
+    .typing::after {
+      content: "|";
+      animation: blink 0.7s infinite;
     }
-
-    @keyframes typing {
-      0% { width: 0 }
-      25% { width: 14ch }
-      50% { width: 30ch }
-      75% { width: 48ch }
-      100% { width: 0 }
-    }
-
-    @keyframes blink-caret {
-      0%,100% { border-color: transparent }
-      50% { border-color: #22c55e }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .typing { animation: none; }
+    @keyframes blink {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
     }
   </style>
 </head>
-<body class="bg-white text-gray-900">
 
-  <header class="fixed w-full bg-white shadow z-50">
-    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <span class="text-2xl font-bold text-green-600">Structura AI</span>
-      <div class="hidden md:flex space-x-6 items-center">
-        <a href="#features" class="hover:text-indigo-600 text-gray-600">Features</a>
-        <a href="#achievements" class="hover:text-indigo-600 text-gray-600">Achievements</a>
-        <a href="/login" class="px-6 py-2 bg-green-600 text-white rounded hover:bg-indigo-700 transition">Try Now</a>
-      </div>
-    </nav>
+<body class="text-gray-900 font-sans">
+
+  <!-- Navigation -->
+  <header class="w-full bg-white border-b fixed top-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="text-2xl font-bold text-green-600">Structura AI</div>
+      <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
+        <a href="#features" class="hover:text-green-600">Features</a>
+        <a href="#achievements" class="hover:text-green-600">Achievements</a>
+        <a href="/login" class="bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700 transition">Try Now</a>
+      </nav>
+    </div>
   </header>
 
-  <section class="pt-24 pb-12 md:pt-32 bg-gradient-to-br from-green-50 to-white">
-    <div class="container mx-auto px-6 flex flex-col md:flex-row items-center">
-      <div class="md:w-1/2 md:pr-12">
-        <div aria-label="Animated headline — typewriter effect">
-          <span class="typing" role="text">
-            Generate UML Diagrams • Streamline Software Design • Powered by AI
-          </span>
-        </div>
-        <p class="mt-6 text-lg text-gray-600 leading-relaxed">
-          Transform your ideas into professional UML diagrams in seconds. Save time, collaborate easily, and keep design seamless.
-        </p>
-        <div class="mt-8 flex space-x-4">
-          <a href="/login" class="px-8 py-3 bg-green-600 text-white rounded hover:bg-indigo-700 transition transform hover:scale-105">
-            Try Now
-          </a>
-          <a href="#features" class="px-8 py-3 border border-gray-300 text-gray-700 rounded hover:border-green-600 hover:text-indigo-600 transition transform hover:scale-105">
-            Learn More
-          </a>
-        </div>
-      </div>
-      <div class="md:w-1/2 mt-12 md:mt-0">
-        <img src="{{ url_for('static', filename='com_logo.png') }}" alt="UML Diagram Example"
-             width="400" class="rounded-lg shadow-lg">
+  <!-- Hero Section -->
+  <section class="flex items-center justify-center min-h-screen pt-20 bg-gradient-to-br from-green-50 to-white">
+    <div class="max-w-3xl text-center px-6">
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
+        <span id="typing-text" class="typing text-gray-800"></span>
+      </h1>
+      <p class="text-gray-600 text-lg mb-8">
+        Transform your software ideas into professional UML diagrams in seconds with our AI-powered platform.
+      </p>
+      <div class="flex justify-center space-x-4">
+        <a href="/login" class="bg-green-600 text-white px-6 py-3 rounded-md text-lg hover:bg-green-700 transition">Try Now</a>
+        <a href="#features" class="border border-gray-300 text-gray-700 px-6 py-3 rounded-md text-lg hover:border-green-600 hover:text-green-600 transition">Learn More</a>
       </div>
     </div>
   </section>
 
-  <!-- Features & Achievements Sections unchanged -->
-  <!-- Include your existing markup below this -->
+  <!-- Features -->
+  <section id="features" class="py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold mb-12">Powerful Features</h2>
+      <div class="grid md:grid-cols-3 gap-10 text-left">
+        <div class="bg-white p-6 shadow-md rounded-lg">
+          <h3 class="text-xl font-semibold mb-2 text-green-600">AI-Powered Diagram Generation</h3>
+          <p class="text-gray-600">Generate accurate UML diagrams from natural language or code with state-of-the-art AI.</p>
+        </div>
+        <div class="bg-white p-6 shadow-md rounded-lg">
+          <h3 class="text-xl font-semibold mb-2 text-green-600">Support for Multiple Types</h3>
+          <p class="text-gray-600">Design class, sequence, activity, and use case diagrams with ease and clarity.</p>
+        </div>
+        <div class="bg-white p-6 shadow-md rounded-lg">
+          <h3 class="text-xl font-semibold mb-2 text-green-600">Export & Collaboration</h3>
+          <p class="text-gray-600">Download, share, and collaborate with your team across formats and devices.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Achievements -->
+  <section id="achievements" class="py-24 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold mb-12">Our Achievements</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-lg p-8 shadow-md">
+          <h3 class="text-4xl font-bold text-green-600">120+</h3>
+          <p class="text-gray-600">Diagrams Generated</p>
+        </div>
+        <div class="bg-white rounded-lg p-8 shadow-md">
+          <h3 class="text-4xl font-bold text-green-600">5+</h3>
+          <p class="text-gray-600">Diagram Types Supported</p>
+        </div>
+        <div class="bg-white rounded-lg p-8 shadow-md">
+          <h3 class="text-4xl font-bold text-green-600">150+</h3>
+          <p class="text-gray-600">Hours Saved</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-12">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8">
+      <div>
+        <h4 class="text-white font-bold text-xl mb-4">Structura AI</h4>
+        <p>Create UML diagrams with the power of AI — fast, clean, and collaborative.</p>
+      </div>
+      <div>
+        <h5 class="text-white font-semibold mb-2">Product</h5>
+        <ul class="space-y-2">
+          <li><a href="#features" class="hover:text-white">Features</a></li>
+          <li><a href="#achievements" class="hover:text-white">Achievements</a></li>
+          <li><a href="/login" class="hover:text-white">Try Now</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="text-white font-semibold mb-2">Company</h5>
+        <ul class="space-y-2">
+          <li><a href="#" class="hover:text-white">About</a></li>
+          <li><a href="#" class="hover:text-white">Blog</a></li>
+          <li><a href="#" class="hover:text-white">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="text-white font-semibold mb-2">Legal</h5>
+        <ul class="space-y-2">
+          <li><a href="#" class="hover:text-white">Privacy</a></li>
+          <li><a href="#" class="hover:text-white">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="text-center mt-12 border-t border-gray-800 pt-6">
+      <p>&copy; 2025 Structura AI. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Typing Animation Script -->
+  <script>
+    const textElement = document.getElementById("typing-text");
+    const phrases = [
+      "Generate UML Diagrams Instantly",
+      "Streamline Software Design",
+      "Powered by Artificial Intelligence"
+    ];
+    let index = 0, char = 0, isDeleting = false;
+
+    function type() {
+      const current = phrases[index];
+      textElement.textContent = current.substring(0, char);
+      if (!isDeleting) {
+        if (char < current.length) {
+          char++;
+        } else {
+          isDeleting = true;
+          setTimeout(type, 1500);
+          return;
+        }
+      } else {
+        if (char > 0) {
+          char--;
+        } else {
+          isDeleting = false;
+          index = (index + 1) % phrases.length;
+        }
+      }
+      setTimeout(type, isDeleting ? 40 : 80);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => setTimeout(type, 500));
+  </script>
 
 </body>
 </html>
