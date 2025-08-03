@@ -20,10 +20,13 @@
 
 <body class="text-gray-900 font-sans">
 
-  <!-- Navigation -->
+  <!-- Header -->
   <header class="w-full bg-white border-b fixed top-0 z-50 shadow-sm">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="text-2xl font-bold text-green-600">Structura AI</div>
+      <div class="flex items-center space-x-3">
+        <img src="static/logo.png" alt="Structura Logo" class="h-10 w-10 object-contain" />
+        <span class="text-2xl font-bold text-green-600">Structura AI</span>
+      </div>
       <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
         <a href="#features" class="hover:text-green-600">Features</a>
         <a href="#achievements" class="hover:text-green-600">Achievements</a>
@@ -33,22 +36,27 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="flex items-center justify-center min-h-screen pt-20 bg-gradient-to-br from-green-50 to-white">
-    <div class="max-w-3xl text-center px-6">
+  <section class="flex items-center justify-center min-h-screen pt-24 bg-gradient-to-br from-green-50 to-white">
+    <div class="max-w-4xl text-center px-6">
       <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
         <span id="typing-text" class="typing text-gray-800"></span>
       </h1>
       <p class="text-gray-600 text-lg mb-8">
-        Transform your software ideas into professional UML diagrams in seconds with our AI-powered platform.
+        Transform your ideas into professional UML diagrams with Structura AI — powered by cutting-edge artificial intelligence.
       </p>
       <div class="flex justify-center space-x-4">
         <a href="/login" class="bg-green-600 text-white px-6 py-3 rounded-md text-lg hover:bg-green-700 transition">Try Now</a>
         <a href="#features" class="border border-gray-300 text-gray-700 px-6 py-3 rounded-md text-lg hover:border-green-600 hover:text-green-600 transition">Learn More</a>
       </div>
+
+      <!-- Hero Image -->
+      <div class="mt-10 flex justify-center">
+        <img src="static/logo.png" alt="UML Hero Illustration" class="w-64 md:w-80 h-auto rounded-lg shadow-md" />
+      </div>
     </div>
   </section>
 
-  <!-- Features -->
+  <!-- Features Section -->
   <section id="features" class="py-24 bg-white">
     <div class="max-w-6xl mx-auto px-6 text-center">
       <h2 class="text-3xl font-bold mb-12">Powerful Features</h2>
@@ -69,7 +77,7 @@
     </div>
   </section>
 
-  <!-- Achievements -->
+  <!-- Achievements Section -->
   <section id="achievements" class="py-24 bg-gray-50">
     <div class="max-w-6xl mx-auto px-6 text-center">
       <h2 class="text-3xl font-bold mb-12">Our Achievements</h2>
