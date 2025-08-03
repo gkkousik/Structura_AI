@@ -1,55 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7CHN2YWSKE"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7CHN2YWSKE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-7CHN2YWSKE');
+  </script>
 
-  gtag('config', 'G-7CHN2YWSKE');
-</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - Structura AI</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-</head>
-<body class="bg-white min-h-screen flex items-center justify-center">
 
-  <!-- Login Card with Light Green Gradient -->
-  <div class="w-full max-w-md p-8 shadow-lg rounded-xl border bg-gradient-to-br from-green-100 via-green-200 to-white text-gray-800">
+  <style>
+    body {
+      background: linear-gradient(to top right, #d1fae5, #ffffff);
+    }
+
+    .glass {
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .input-glow:focus {
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.4);
+    }
+
+    .logo-shadow {
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.5);
+    }
+  </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen font-sans">
+
+  <!-- Login Card -->
+  <div class="glass w-full max-w-md p-8 rounded-xl shadow-2xl border border-green-100 text-gray-800">
     
-    <!-- Logo and Company Name -->
+    <!-- Logo and App Name -->
     <div class="flex flex-col items-center mb-6">
-      <img src="{{ url_for('static', filename='image.png') }}" alt="UML Diagram Example" width="60px" class="rounded-lg" style="box-shadow: 0 4px 8px rgba(0, 130, 0, 0.6);">
-      <h1 class="text-2xl font-extrabold">Structura AI</h1>
+      <img src="static/com_logo.png" alt="Structura AI Logo" class="h-16 w-16 rounded-full logo-shadow mb-2" />
+      <h1 class="text-2xl font-extrabold text-green-700">Structura AI</h1>
     </div>
 
     <h2 class="text-xl font-bold mb-4 text-center">Login to Your Account</h2>
 
+    <!-- Error Message -->
     {% if error %}
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-      <strong>Error:</strong> {{ error }}
+      <strong class="font-semibold">Error:</strong> {{ error }}
     </div>
     {% endif %}
 
-    <form method="POST" action="/login">
-      <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">Username</label>
-        <input type="text" name="username" required class="w-full px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400" />
+    <!-- Login Form -->
+    <form method="POST" action="/login" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium mb-1 text-gray-700">Username</label>
+        <input 
+          type="text" 
+          name="username" 
+          required 
+          class="w-full px-4 py-2 border border-gray-300 rounded-md input-glow focus:outline-none focus:ring-2 focus:ring-green-400 transition duration-150"
+        />
       </div>
 
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-1">Password</label>
-        <input type="password" name="password" required class="w-full px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400" />
+      <div>
+        <label class="block text-sm font-medium mb-1 text-gray-700">Password</label>
+        <input 
+          type="password" 
+          name="password" 
+          required 
+          class="w-full px-4 py-2 border border-gray-300 rounded-md input-glow focus:outline-none focus:ring-2 focus:ring-green-400 transition duration-150"
+        />
       </div>
 
-      <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded transition duration-200">Login</button>
+      <button 
+        type="submit" 
+        class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-md transition-all duration-200 shadow-md"
+      >
+        Login
+      </button>
     </form>
 
-    <p class="mt-4 text-center text-sm">Don't have an account? 
-      <a href="/signup" class="text-green-600 hover:underline">Sign Up</a>
+    <!-- Sign Up Link -->
+    <p class="mt-4 text-center text-sm">
+      Don’t have an account?
+      <a href="/signup" class="text-green-600 hover:underline font-medium">Sign Up</a>
     </p>
   </div>
 
