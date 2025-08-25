@@ -1,367 +1,186 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth bg-gray-50">
+<html lang="en" class="scroll-smooth bg-black text-gray-100">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Structura AI – UML Generator</title>
-
-  <!-- Tailwind CSS (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50:  '#f0fdf4',
-              100: '#dcfce7',
-              200: '#bbf7d0',
-              300: '#86efac',
-              400: '#4ade80',
-              500: '#22c55e',
-              600: '#16a34a',
-              700: '#15803d',
-              800: '#166534',
-              900: '#14532d',
-            }
-          },
-          boxShadow: {
-            soft: '0 10px 30px -10px rgba(16,185,129,.25)',
-            card: '0 10px 25px -8px rgba(15,23,42,.15)',
-          },
-          animation: {
-            'float-slow': 'float 8s ease-in-out infinite',
-            'gradient': 'gradient 12s ease infinite',
-            'fade-in': 'fadeIn 800ms ease forwards',
-          },
-          keyframes: {
-            float: {
-              '0%,100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-10px)' },
-            },
-            gradient: {
-              '0%':   { backgroundPosition: '0% 50%' },
-              '50%':  { backgroundPosition: '100% 50%' },
-              '100%': { backgroundPosition: '0% 50%' },
-            },
-            fadeIn: {
-              from: { opacity: 0, transform: 'translateY(12px)' },
-              to:   { opacity: 1, transform: 'translateY(0)' }
-            }
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Favicon (optional) -->
-  <link rel="icon" href="static/com_logo.png" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 
   <style>
-    /* Elegant animated gradient background for hero */
-    .hero-bg {
-      background: linear-gradient(120deg, rgba(34,197,94,.08), rgba(16,185,129,.06), rgba(59,130,246,.05));
+    /* Animated gradient background */
+    .gradient-bg {
+      background: radial-gradient(circle at 20% 30%, rgba(34,197,94,.25), transparent 50%),
+                  radial-gradient(circle at 80% 70%, rgba(147,51,234,.25), transparent 50%),
+                  radial-gradient(circle at 50% 50%, rgba(59,130,246,.25), transparent 70%);
       background-size: 200% 200%;
-      animation: gradient 16s ease infinite;
+      animation: move-bg 18s ease infinite;
     }
-    /* Glassmorphism utility */
+    @keyframes move-bg {
+      0%,100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    /* Glow text */
+    .glow {
+      text-shadow: 0 0 20px rgba(34,197,94,.7), 0 0 40px rgba(147,51,234,.5);
+    }
+    /* Glassmorphism card */
     .glass {
-      backdrop-filter: saturate(140%) blur(8px);
-      -webkit-backdrop-filter: saturate(140%) blur(8px);
-      background: rgba(255,255,255,.7);
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all .3s ease;
     }
-    /* Type cursor */
-    .typing::after {
-      content: "▍";
-      margin-left: 2px;
-      opacity: .8;
-      animation: blink .9s steps(2, start) infinite;
+    .glass:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 20px rgba(34,197,94,.4), 0 0 40px rgba(147,51,234,.3);
     }
-    @keyframes blink { to { opacity: 0; } }
-
-    /* Scroll reveal base state */
-    .reveal {
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity .7s ease, transform .7s ease;
-    }
-    .reveal.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Respect reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      .hero-bg { animation: none !important; }
-      .typing::after { animation: none !important; }
-      .reveal { transition: none !important; }
+    /* Particle canvas */
+    #particles {
+      position: absolute;
+      top:0; left:0;
+      width:100%; height:100%;
+      z-index: 0;
     }
   </style>
 </head>
 
-<body class="text-gray-900 antialiased">
-
-  <!-- Header -->
-  <header id="nav" class="w-full fixed top-0 z-50 transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-5">
-      <div class="flex items-center justify-between py-4">
-        <a href="#" class="flex items-center gap-3">
-          <img src="static/com_logo.png" alt="Structura Logo" class="h-10 w-10 object-contain rounded-md shadow-soft" />
-          <span class="text-xl md:text-2xl font-extrabold text-brand-700 tracking-tight">Structura AI</span>
-        </a>
-
-        <nav class="hidden md:flex items-center gap-6 text-gray-700">
-          <a href="#features" class="hover:text-brand-700 transition">Features</a>
-          <a href="#achievements" class="hover:text-brand-700 transition">Achievements</a>
-          <a href="/login" class="ml-2 bg-brand-600 text-white px-5 py-2.5 rounded-lg hover:bg-brand-700 shadow-soft transition">Try Now</a>
-        </nav>
-
-        <!-- Mobile -->
-        <a href="/login" class="md:hidden bg-brand-600 text-white px-4 py-2 rounded-lg hover:bg-brand-700 transition">Try</a>
-      </div>
-    </div>
-  </header>
+<body class="antialiased bg-black overflow-x-hidden">
 
   <!-- Hero -->
-  <section class="relative pt-28 md:pt-32">
-    <div class="absolute inset-0 hero-bg"></div>
-    <div class="relative max-w-7xl mx-auto px-5 pb-12 md:pb-20">
-      <div class="grid md:grid-cols-2 items-center gap-10">
-        <div class="reveal show">
-          <h1 class="text-4xl md:text-5xl font-extrabold leading-tight text-slate-900">
-            <span id="typing-text" class="typing">Generate UML Diagrams Instantly</span>
-          </h1>
-          <p class="mt-5 text-slate-600 text-lg leading-relaxed">
-            Transform your ideas into professional UML diagrams with Structura AI — powered by cutting-edge intelligence and crafted for speed and clarity.
-          </p>
-          <div class="mt-8 flex items-center gap-4">
-            <a href="/login" class="inline-flex items-center gap-2 bg-brand-600 text-white px-6 py-3 rounded-xl hover:bg-brand-700 shadow-soft transition">
-              Try Now
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 -mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-            </a>
-            <a href="#features" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 text-slate-800 hover:border-brand-400 hover:text-brand-700 transition">
-              Learn More
-            </a>
-          </div>
+  <section class="relative min-h-screen flex items-center justify-center gradient-bg overflow-hidden">
+    <canvas id="particles"></canvas>
+    <div class="absolute inset-0 bg-black/70"></div>
 
-          <!-- Trust badges -->
-          <div class="mt-8 flex flex-wrap items-center gap-6 text-sm text-slate-500">
-            <div class="flex items-center gap-2">
-              <span class="h-2 w-2 rounded-full bg-emerald-500"></span> <span>Deployed on Render</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="h-2 w-2 rounded-full bg-blue-500"></span> <span>Secured by Firebase</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="h-2 w-2 rounded-full bg-violet-500"></span> <span>Graphviz Rendering</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="relative">
-          <!-- Floating card -->
-          <div class="glass rounded-2xl p-6 shadow-card border border-white/50 reveal">
-            <img src="static/com_logo.png" class="mx-auto h-28 w-28 object-contain drop-shadow" alt="UML Hero Illustration" />
-            <div class="mt-5 grid grid-cols-3 gap-4 text-center">
-              <div class="rounded-xl bg-white/70 p-4 shadow-sm">
-                <div class="text-2xl font-bold text-brand-700" data-counter="120">0</div>
-                <div class="text-xs text-slate-500 mt-1">Diagrams</div>
-              </div>
-              <div class="rounded-xl bg-white/70 p-4 shadow-sm">
-                <div class="text-2xl font-bold text-brand-700" data-counter="5">0</div>
-                <div class="text-xs text-slate-500 mt-1">Types</div>
-              </div>
-              <div class="rounded-xl bg-white/70 p-4 shadow-sm">
-                <div class="text-2xl font-bold text-brand-700" data-counter="150">0</div>
-                <div class="text-xs text-slate-500 mt-1">Hours Saved</div>
-              </div>
-            </div>
-            <div class="mt-6 text-center">
-              <a href="/login" class="inline-flex items-center gap-2 text-brand-700 font-semibold hover:underline">
-                Generate your first diagram →
-              </a>
-            </div>
-          </div>
-
-          <!-- Ambient shapes -->
-          <span class="absolute -top-6 -right-6 h-24 w-24 bg-emerald-100 rounded-full blur-2xl opacity-70 animate-float-slow"></span>
-          <span class="absolute -bottom-8 -left-8 h-20 w-20 bg-sky-100 rounded-full blur-2xl opacity-70 animate-float-slow" style="animation-delay: -2s;"></span>
-        </div>
+    <div class="relative z-10 max-w-4xl mx-auto text-center px-6" data-aos="fade-up">
+      <h1 class="text-5xl md:text-6xl font-extrabold glow mb-6">
+        Turn Prompts into UML <br/> <span class="text-emerald-400">Structura AI</span>
+      </h1>
+      <p class="text-lg md:text-xl text-gray-300 mb-8">
+        Like Netflix for software design — describe it, and watch your diagrams come alive.
+      </p>
+      <div class="flex justify-center gap-4">
+        <a href="/login" class="bg-emerald-500 hover:bg-emerald-600 px-6 py-3 rounded-lg text-black font-semibold shadow-lg">
+          🚀 Try Now
+        </a>
+        <a href="#features" class="border border-gray-500 hover:border-emerald-400 px-6 py-3 rounded-lg text-gray-200 hover:text-emerald-400">
+          Learn More
+        </a>
       </div>
     </div>
   </section>
 
   <!-- Features -->
-  <section id="features" class="py-20 md:py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-5">
-      <h2 class="text-3xl md:text-4xl font-bold text-center text-slate-900 reveal">Powerful Features</h2>
-      <p class="text-center text-slate-600 mt-3 max-w-2xl mx-auto reveal">Designed for clarity and speed—no clutter, just results.</p>
-
-      <div class="mt-12 grid gap-6 md:grid-cols-3">
-        <!-- Card -->
-        <div class="reveal group bg-white rounded-2xl p-6 shadow-card border border-slate-100 hover:shadow-soft transition">
-          <div class="h-12 w-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4 group-hover:scale-105 transition">
-            <!-- bolt icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M11 21h-1l1-7H7l6-11h1l-1 7h4l-6 11z"/></svg>
-          </div>
-          <h3 class="text-lg font-semibold text-slate-900">AI-Powered Generation</h3>
-          <p class="mt-2 text-slate-600">Generate accurate UML from natural language with GPT-based parsing.</p>
+  <section id="features" class="py-24 bg-gradient-to-b from-black to-gray-900">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold mb-12 glow" data-aos="zoom-in">Features that Spark Productivity</h2>
+      <div class="grid md:grid-cols-3 gap-10">
+        <div class="glass p-8 rounded-xl" data-aos="fade-up" data-aos-delay="100">
+          <h3 class="text-xl font-semibold text-emerald-400 mb-3">⚡ AI-Powered UML</h3>
+          <p class="text-gray-400">Generate Class, Sequence, and Use Case diagrams in seconds from plain English.</p>
         </div>
-
-        <div class="reveal group bg-white rounded-2xl p-6 shadow-card border border-slate-100 hover:shadow-soft transition">
-          <div class="h-12 w-12 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center mb-4 group-hover:scale-105 transition">
-            <!-- layers icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l9 5-9 5-9-5 9-5zm9 9l-9 5-9-5v3l9 5 9-5v-3z"/></svg>
-          </div>
-          <h3 class="text-lg font-semibold text-slate-900">Multiple Diagram Types</h3>
-          <p class="mt-2 text-slate-600">Class, sequence, activity, and use case—rendered cleanly with Graphviz.</p>
+        <div class="glass p-8 rounded-xl" data-aos="fade-up" data-aos-delay="200">
+          <h3 class="text-xl font-semibold text-violet-400 mb-3">🎬 Real-Time Rendering</h3>
+          <p class="text-gray-400">Visualize system architecture instantly with Graphviz rendering under 20s.</p>
         </div>
-
-        <div class="reveal group bg-white rounded-2xl p-6 shadow-card border border-slate-100 hover:shadow-soft transition">
-          <div class="h-12 w-12 rounded-xl bg-violet-100 text-violet-700 flex items-center justify-center mb-4 group-hover:scale-105 transition">
-            <!-- share icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7a3.27 3.27 0 0 0 0-1.39l7-4.05a3 3 0 1 0-1-1.73L8 9.58a3 3 0 1 0 0 4.84l7.09 4.04a3 3 0 1 0 2.91-2.38z"/></svg>
-          </div>
-          <h3 class="text-lg font-semibold text-slate-900">Export & Collaborate</h3>
-          <p class="mt-2 text-slate-600">Download PNGs, share links, and integrate into existing workflows.</p>
+        <div class="glass p-8 rounded-xl" data-aos="fade-up" data-aos-delay="300">
+          <h3 class="text-xl font-semibold text-sky-400 mb-3">🌍 Collaboration Ready</h3>
+          <p class="text-gray-400">Download, share, and integrate UML diagrams across your team and workflow.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Achievements / Metrics -->
-  <section id="achievements" class="py-20 md:py-24 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-5">
-      <h2 class="text-3xl md:text-4xl font-bold text-center text-slate-900 reveal">Our Achievements</h2>
-      <p class="text-center text-slate-600 mt-3 max-w-2xl mx-auto reveal">Proof that simplicity and power can go hand in hand.</p>
-
-      <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div class="reveal bg-white rounded-2xl p-8 shadow-card text-center border border-slate-100">
-          <div class="text-4xl md:text-5xl font-extrabold text-brand-700" data-counter="120">0</div>
-          <p class="mt-2 text-slate-500">Diagrams Generated</p>
+  <!-- Achievements -->
+  <section id="achievements" class="py-24 bg-black">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold mb-12 glow" data-aos="zoom-in">Trusted by Early Users</h2>
+      <div class="grid md:grid-cols-3 gap-10">
+        <div class="glass p-8 rounded-xl" data-aos="fade-right">
+          <h3 class="text-4xl font-extrabold text-emerald-400">120+</h3>
+          <p class="text-gray-400">Diagrams Generated</p>
         </div>
-        <div class="reveal bg-white rounded-2xl p-8 shadow-card text-center border border-slate-100">
-          <div class="text-4xl md:text-5xl font-extrabold text-brand-700" data-counter="5">0</div>
-          <p class="mt-2 text-slate-500">Diagram Types</p>
+        <div class="glass p-8 rounded-xl" data-aos="fade-up">
+          <h3 class="text-4xl font-extrabold text-violet-400">5+</h3>
+          <p class="text-gray-400">Diagram Types Supported</p>
         </div>
-        <div class="reveal bg-white rounded-2xl p-8 shadow-card text-center border border-slate-100">
-          <div class="text-4xl md:text-5xl font-extrabold text-brand-700" data-counter="150">0</div>
-          <p class="mt-2 text-slate-500">Hours Saved</p>
+        <div class="glass p-8 rounded-xl" data-aos="fade-left">
+          <h3 class="text-4xl font-extrabold text-sky-400">150+</h3>
+          <p class="text-gray-400">Hours Saved</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-5">
-      <div class="reveal glass rounded-3xl p-8 md:p-12 shadow-card border border-white/50 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div>
-          <h3 class="text-2xl md:text-3xl font-extrabold text-slate-900">Design visually. Describe naturally.</h3>
-          <p class="text-slate-600 mt-2">Start generating UML from plain English and ship designs faster.</p>
-        </div>
-        <a href="/login" class="bg-brand-600 text-white px-6 py-3 rounded-xl hover:bg-brand-700 shadow-soft transition">Try Structura AI</a>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-slate-950 text-slate-400 pt-14 pb-10">
-    <div class="max-w-7xl mx-auto px-5 grid gap-10 md:grid-cols-4">
-      <div>
-        <h4 class="text-white font-bold text-xl mb-3">Structura AI</h4>
-        <p class="leading-relaxed">Create UML diagrams with the power of AI — fast, clean, and collaborative.</p>
+  <footer class="bg-gray-950 text-gray-500 py-10">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+      <p>&copy; 2025 Structura AI. Built with 💡 & Graphviz</p>
+      <div class="flex gap-4 mt-4 md:mt-0">
+        <a href="#" class="hover:text-emerald-400">Privacy</a>
+        <a href="#" class="hover:text-emerald-400">Terms</a>
+        <a href="#" class="hover:text-emerald-400">Contact</a>
       </div>
-      <div>
-        <h5 class="text-white font-semibold mb-2">Product</h5>
-        <ul class="space-y-2">
-          <li><a href="#features" class="hover:text-white transition">Features</a></li>
-          <li><a href="#achievements" class="hover:text-white transition">Achievements</a></li>
-          <li><a href="/login" class="hover:text-white transition">Try Now</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5 class="text-white font-semibold mb-2">Company</h5>
-        <ul class="space-y-2">
-          <li><a href="#" class="hover:text-white transition">About</a></li>
-          <li><a href="#" class="hover:text-white transition">Blog</a></li>
-          <li><a href="#" class="hover:text-white transition">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5 class="text-white font-semibold mb-2">Legal</h5>
-        <ul class="space-y-2">
-          <li><a href="#" class="hover:text-white transition">Privacy</a></li>
-          <li><a href="#" class="hover:text-white transition">Terms</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="text-center mt-10 border-t border-white/10 pt-6">
-      <p>&copy; 2025 Structura AI. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- Scripts: typing, navbar blur, reveal on scroll, counters -->
+  <!-- Animations -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({ duration: 1000, once: true });</script>
+
+  <!-- Particle Animation -->
   <script>
-    // Typing effect
-    const textEl = document.getElementById("typing-text");
-    const phrases = [
-      "Generate UML Diagrams Instantly",
-      "Streamline Software Design",
-      "Powered by Artificial Intelligence"
-    ];
-    let pi = 0, ci = 0, deleting = false;
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let particlesArray;
 
-    function type() {
-      const current = phrases[pi];
-      textEl.textContent = current.slice(0, ci);
-      if (!deleting && ci < current.length) ci++;
-      else if (!deleting && ci === current.length) deleting = true, setTimeout(type, 1400); 
-      else if (deleting && ci > 0) ci--;
-      else if (deleting && ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
-      setTimeout(type, deleting ? 35 : 70);
-    }
-    document.addEventListener("DOMContentLoaded", () => setTimeout(type, 600));
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    // Navbar blur on scroll
-    const nav = document.getElementById('nav');
-    const onScroll = () => {
-      if (window.scrollY > 6) {
-        nav.classList.add('backdrop-blur', 'bg-white/70', 'shadow-md');
-      } else {
-        nav.classList.remove('backdrop-blur', 'bg-white/70', 'shadow-md');
+    window.addEventListener("resize", function(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      init();
+    });
+
+    class Particle {
+      constructor(x, y, dx, dy, size, color) {
+        this.x = x; this.y = y; this.dx = dx; this.dy = dy; this.size = size; this.color = color;
       }
-    };
-    document.addEventListener('scroll', onScroll);
-    onScroll();
-
-    // Reveal on scroll (IntersectionObserver)
-    const revealEls = document.querySelectorAll('.reveal');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('show');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
-    revealEls.forEach(el => io.observe(el));
-
-    // Animated counters
-    function animateCounter(el) {
-      const target = +el.getAttribute('data-counter');
-      const duration = 1200;
-      const start = 0;
-      const startTime = performance.now();
-      function tick(now) {
-        const p = Math.min((now - startTime) / duration, 1);
-        const val = Math.floor(start + (target - start) * p);
-        el.textContent = val + (target >= 100 ? '+' : '');
-        if (p < 1) requestAnimationFrame(tick);
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
       }
-      requestAnimationFrame(tick);
+      update() {
+        if(this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
+        if(this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
+        this.x += this.dx;
+        this.y += this.dy;
+        this.draw();
+      }
     }
-    document.querySelectorAll('[data-counter]').forEach(animateCounter);
+
+    function init(){
+      particlesArray = [];
+      for(let i=0; i<80; i++){
+        let size = Math.random()*2+1;
+        let x = Math.random()*(innerWidth-size*2);
+        let y = Math.random()*(innerHeight-size*2);
+        let dx = (Math.random()-0.5)*1.5;
+        let dy = (Math.random()-0.5)*1.5;
+        let color = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 0.7)`;
+        particlesArray.push(new Particle(x,y,dx,dy,size,color));
+      }
+    }
+    function animate(){
+      requestAnimationFrame(animate);
+      ctx.clearRect(0,0,innerWidth,innerHeight);
+      for(let i=0; i<particlesArray.length; i++){ particlesArray[i].update(); }
+    }
+    init();
+    animate();
   </script>
 </body>
 </html>
