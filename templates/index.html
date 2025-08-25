@@ -4,170 +4,364 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Structura AI – UML Generator</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50:  '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          },
+          boxShadow: {
+            soft: '0 10px 30px -10px rgba(16,185,129,.25)',
+            card: '0 10px 25px -8px rgba(15,23,42,.15)',
+          },
+          animation: {
+            'float-slow': 'float 8s ease-in-out infinite',
+            'gradient': 'gradient 12s ease infinite',
+            'fade-in': 'fadeIn 800ms ease forwards',
+          },
+          keyframes: {
+            float: {
+              '0%,100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            gradient: {
+              '0%':   { backgroundPosition: '0% 50%' },
+              '50%':  { backgroundPosition: '100% 50%' },
+              '100%': { backgroundPosition: '0% 50%' },
+            },
+            fadeIn: {
+              from: { opacity: 0, transform: 'translateY(12px)' },
+              to:   { opacity: 1, transform: 'translateY(0)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Favicon (optional) -->
+  <link rel="icon" href="static/com_logo.png" />
 
   <style>
-    .typing::after {
-      content: "|";
-      animation: blink 0.7s infinite;
+    /* Elegant animated gradient background for hero */
+    .hero-bg {
+      background: linear-gradient(120deg, rgba(34,197,94,.08), rgba(16,185,129,.06), rgba(59,130,246,.05));
+      background-size: 200% 200%;
+      animation: gradient 16s ease infinite;
     }
-    @keyframes blink {
-      0%, 100% { opacity: 0; }
-      50% { opacity: 1; }
+    /* Glassmorphism utility */
+    .glass {
+      backdrop-filter: saturate(140%) blur(8px);
+      -webkit-backdrop-filter: saturate(140%) blur(8px);
+      background: rgba(255,255,255,.7);
+    }
+    /* Type cursor */
+    .typing::after {
+      content: "▍";
+      margin-left: 2px;
+      opacity: .8;
+      animation: blink .9s steps(2, start) infinite;
+    }
+    @keyframes blink { to { opacity: 0; } }
+
+    /* Scroll reveal base state */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-bg { animation: none !important; }
+      .typing::after { animation: none !important; }
+      .reveal { transition: none !important; }
     }
   </style>
 </head>
 
-<body class="text-gray-900 font-sans">
+<body class="text-gray-900 antialiased">
 
   <!-- Header -->
-  <header class="w-full bg-white border-b fixed top-0 z-50 shadow-sm">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center space-x-3">
-        <img src="static/com_logo.png" alt="Structura Logo" class="h-10 w-10 object-contain" />
-        <span class="text-2xl font-bold text-green-600">Structura AI</span>
+  <header id="nav" class="w-full fixed top-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-5">
+      <div class="flex items-center justify-between py-4">
+        <a href="#" class="flex items-center gap-3">
+          <img src="static/com_logo.png" alt="Structura Logo" class="h-10 w-10 object-contain rounded-md shadow-soft" />
+          <span class="text-xl md:text-2xl font-extrabold text-brand-700 tracking-tight">Structura AI</span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6 text-gray-700">
+          <a href="#features" class="hover:text-brand-700 transition">Features</a>
+          <a href="#achievements" class="hover:text-brand-700 transition">Achievements</a>
+          <a href="/login" class="ml-2 bg-brand-600 text-white px-5 py-2.5 rounded-lg hover:bg-brand-700 shadow-soft transition">Try Now</a>
+        </nav>
+
+        <!-- Mobile -->
+        <a href="/login" class="md:hidden bg-brand-600 text-white px-4 py-2 rounded-lg hover:bg-brand-700 transition">Try</a>
       </div>
-      <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
-        <a href="#features" class="hover:text-green-600">Features</a>
-        <a href="#achievements" class="hover:text-green-600">Achievements</a>
-        <a href="/login" class="bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700 transition">Try Now</a>
-      </nav>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="flex items-center justify-center min-h-screen pt-24 bg-gradient-to-br from-green-50 to-white">
-    <div class="max-w-4xl text-center px-6">
-      <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
-        <span id="typing-text" class="typing text-gray-800"></span>
-      </h1>
-      <p class="text-gray-600 text-lg mb-8">
-        Transform your ideas into professional UML diagrams with Structura AI — powered by cutting-edge artificial intelligence.
-      </p>
-      <div class="flex justify-center space-x-4">
-        <a href="/login" class="bg-green-600 text-white px-6 py-3 rounded-md text-lg hover:bg-green-700 transition">Try Now</a>
-        <a href="#features" class="border border-gray-300 text-gray-700 px-6 py-3 rounded-md text-lg hover:border-green-600 hover:text-green-600 transition">Learn More</a>
-      </div>
+  <!-- Hero -->
+  <section class="relative pt-28 md:pt-32">
+    <div class="absolute inset-0 hero-bg"></div>
+    <div class="relative max-w-7xl mx-auto px-5 pb-12 md:pb-20">
+      <div class="grid md:grid-cols-2 items-center gap-10">
+        <div class="reveal show">
+          <h1 class="text-4xl md:text-5xl font-extrabold leading-tight text-slate-900">
+            <span id="typing-text" class="typing">Generate UML Diagrams Instantly</span>
+          </h1>
+          <p class="mt-5 text-slate-600 text-lg leading-relaxed">
+            Transform your ideas into professional UML diagrams with Structura AI — powered by cutting-edge intelligence and crafted for speed and clarity.
+          </p>
+          <div class="mt-8 flex items-center gap-4">
+            <a href="/login" class="inline-flex items-center gap-2 bg-brand-600 text-white px-6 py-3 rounded-xl hover:bg-brand-700 shadow-soft transition">
+              Try Now
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 -mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            </a>
+            <a href="#features" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 text-slate-800 hover:border-brand-400 hover:text-brand-700 transition">
+              Learn More
+            </a>
+          </div>
 
-      <!-- Hero Image -->
-      <div class="mt-10 flex justify-center">
-        <img src="static/com_logo.png" alt="UML Hero Illustration" class="w-64 md:w-80 h-auto rounded-lg shadow-md" />
+          <!-- Trust badges -->
+          <div class="mt-8 flex flex-wrap items-center gap-6 text-sm text-slate-500">
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span> <span>Deployed on Render</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-blue-500"></span> <span>Secured by Firebase</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-violet-500"></span> <span>Graphviz Rendering</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <!-- Floating card -->
+          <div class="glass rounded-2xl p-6 shadow-card border border-white/50 reveal">
+            <img src="static/com_logo.png" class="mx-auto h-28 w-28 object-contain drop-shadow" alt="UML Hero Illustration" />
+            <div class="mt-5 grid grid-cols-3 gap-4 text-center">
+              <div class="rounded-xl bg-white/70 p-4 shadow-sm">
+                <div class="text-2xl font-bold text-brand-700" data-counter="120">0</div>
+                <div class="text-xs text-slate-500 mt-1">Diagrams</div>
+              </div>
+              <div class="rounded-xl bg-white/70 p-4 shadow-sm">
+                <div class="text-2xl font-bold text-brand-700" data-counter="5">0</div>
+                <div class="text-xs text-slate-500 mt-1">Types</div>
+              </div>
+              <div class="rounded-xl bg-white/70 p-4 shadow-sm">
+                <div class="text-2xl font-bold text-brand-700" data-counter="150">0</div>
+                <div class="text-xs text-slate-500 mt-1">Hours Saved</div>
+              </div>
+            </div>
+            <div class="mt-6 text-center">
+              <a href="/login" class="inline-flex items-center gap-2 text-brand-700 font-semibold hover:underline">
+                Generate your first diagram →
+              </a>
+            </div>
+          </div>
+
+          <!-- Ambient shapes -->
+          <span class="absolute -top-6 -right-6 h-24 w-24 bg-emerald-100 rounded-full blur-2xl opacity-70 animate-float-slow"></span>
+          <span class="absolute -bottom-8 -left-8 h-20 w-20 bg-sky-100 rounded-full blur-2xl opacity-70 animate-float-slow" style="animation-delay: -2s;"></span>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Features Section -->
-  <section id="features" class="py-24 bg-white">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold mb-12">Powerful Features</h2>
-      <div class="grid md:grid-cols-3 gap-10 text-left">
-        <div class="bg-white p-6 shadow-md rounded-lg">
-          <h3 class="text-xl font-semibold mb-2 text-green-600">AI-Powered Diagram Generation</h3>
-          <p class="text-gray-600">Generate accurate UML diagrams from natural language or code with state-of-the-art AI.</p>
+  <!-- Features -->
+  <section id="features" class="py-20 md:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-5">
+      <h2 class="text-3xl md:text-4xl font-bold text-center text-slate-900 reveal">Powerful Features</h2>
+      <p class="text-center text-slate-600 mt-3 max-w-2xl mx-auto reveal">Designed for clarity and speed—no clutter, just results.</p>
+
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        <!-- Card -->
+        <div class="reveal group bg-white rounded-2xl p-6 shadow-card border border-slate-100 hover:shadow-soft transition">
+          <div class="h-12 w-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4 group-hover:scale-105 transition">
+            <!-- bolt icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M11 21h-1l1-7H7l6-11h1l-1 7h4l-6 11z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-slate-900">AI-Powered Generation</h3>
+          <p class="mt-2 text-slate-600">Generate accurate UML from natural language with GPT-based parsing.</p>
         </div>
-        <div class="bg-white p-6 shadow-md rounded-lg">
-          <h3 class="text-xl font-semibold mb-2 text-green-600">Support for Multiple Types</h3>
-          <p class="text-gray-600">Design class, sequence, activity, and use case diagrams with ease and clarity.</p>
+
+        <div class="reveal group bg-white rounded-2xl p-6 shadow-card border border-slate-100 hover:shadow-soft transition">
+          <div class="h-12 w-12 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center mb-4 group-hover:scale-105 transition">
+            <!-- layers icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l9 5-9 5-9-5 9-5zm9 9l-9 5-9-5v3l9 5 9-5v-3z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-slate-900">Multiple Diagram Types</h3>
+          <p class="mt-2 text-slate-600">Class, sequence, activity, and use case—rendered cleanly with Graphviz.</p>
         </div>
-        <div class="bg-white p-6 shadow-md rounded-lg">
-          <h3 class="text-xl font-semibold mb-2 text-green-600">Export & Collaboration</h3>
-          <p class="text-gray-600">Download, share, and collaborate with your team across formats and devices.</p>
+
+        <div class="reveal group bg-white rounded-2xl p-6 shadow-card border border-slate-100 hover:shadow-soft transition">
+          <div class="h-12 w-12 rounded-xl bg-violet-100 text-violet-700 flex items-center justify-center mb-4 group-hover:scale-105 transition">
+            <!-- share icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7a3.27 3.27 0 0 0 0-1.39l7-4.05a3 3 0 1 0-1-1.73L8 9.58a3 3 0 1 0 0 4.84l7.09 4.04a3 3 0 1 0 2.91-2.38z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-slate-900">Export & Collaborate</h3>
+          <p class="mt-2 text-slate-600">Download PNGs, share links, and integrate into existing workflows.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Achievements Section -->
-  <section id="achievements" class="py-24 bg-gray-50">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold mb-12">Our Achievements</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-white rounded-lg p-8 shadow-md">
-          <h3 class="text-4xl font-bold text-green-600">120+</h3>
-          <p class="text-gray-600">Diagrams Generated</p>
+  <!-- Achievements / Metrics -->
+  <section id="achievements" class="py-20 md:py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-5">
+      <h2 class="text-3xl md:text-4xl font-bold text-center text-slate-900 reveal">Our Achievements</h2>
+      <p class="text-center text-slate-600 mt-3 max-w-2xl mx-auto reveal">Proof that simplicity and power can go hand in hand.</p>
+
+      <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="reveal bg-white rounded-2xl p-8 shadow-card text-center border border-slate-100">
+          <div class="text-4xl md:text-5xl font-extrabold text-brand-700" data-counter="120">0</div>
+          <p class="mt-2 text-slate-500">Diagrams Generated</p>
         </div>
-        <div class="bg-white rounded-lg p-8 shadow-md">
-          <h3 class="text-4xl font-bold text-green-600">5+</h3>
-          <p class="text-gray-600">Diagram Types Supported</p>
+        <div class="reveal bg-white rounded-2xl p-8 shadow-card text-center border border-slate-100">
+          <div class="text-4xl md:text-5xl font-extrabold text-brand-700" data-counter="5">0</div>
+          <p class="mt-2 text-slate-500">Diagram Types</p>
         </div>
-        <div class="bg-white rounded-lg p-8 shadow-md">
-          <h3 class="text-4xl font-bold text-green-600">150+</h3>
-          <p class="text-gray-600">Hours Saved</p>
+        <div class="reveal bg-white rounded-2xl p-8 shadow-card text-center border border-slate-100">
+          <div class="text-4xl md:text-5xl font-extrabold text-brand-700" data-counter="150">0</div>
+          <p class="mt-2 text-slate-500">Hours Saved</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-5">
+      <div class="reveal glass rounded-3xl p-8 md:p-12 shadow-card border border-white/50 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <h3 class="text-2xl md:text-3xl font-extrabold text-slate-900">Design visually. Describe naturally.</h3>
+          <p class="text-slate-600 mt-2">Start generating UML from plain English and ship designs faster.</p>
+        </div>
+        <a href="/login" class="bg-brand-600 text-white px-6 py-3 rounded-xl hover:bg-brand-700 shadow-soft transition">Try Structura AI</a>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-400 py-12">
-    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8">
+  <footer class="bg-slate-950 text-slate-400 pt-14 pb-10">
+    <div class="max-w-7xl mx-auto px-5 grid gap-10 md:grid-cols-4">
       <div>
-        <h4 class="text-white font-bold text-xl mb-4">Structura AI</h4>
-        <p>Create UML diagrams with the power of AI — fast, clean, and collaborative.</p>
+        <h4 class="text-white font-bold text-xl mb-3">Structura AI</h4>
+        <p class="leading-relaxed">Create UML diagrams with the power of AI — fast, clean, and collaborative.</p>
       </div>
       <div>
         <h5 class="text-white font-semibold mb-2">Product</h5>
         <ul class="space-y-2">
-          <li><a href="#features" class="hover:text-white">Features</a></li>
-          <li><a href="#achievements" class="hover:text-white">Achievements</a></li>
-          <li><a href="/login" class="hover:text-white">Try Now</a></li>
+          <li><a href="#features" class="hover:text-white transition">Features</a></li>
+          <li><a href="#achievements" class="hover:text-white transition">Achievements</a></li>
+          <li><a href="/login" class="hover:text-white transition">Try Now</a></li>
         </ul>
       </div>
       <div>
         <h5 class="text-white font-semibold mb-2">Company</h5>
         <ul class="space-y-2">
-          <li><a href="#" class="hover:text-white">About</a></li>
-          <li><a href="#" class="hover:text-white">Blog</a></li>
-          <li><a href="#" class="hover:text-white">Contact</a></li>
+          <li><a href="#" class="hover:text-white transition">About</a></li>
+          <li><a href="#" class="hover:text-white transition">Blog</a></li>
+          <li><a href="#" class="hover:text-white transition">Contact</a></li>
         </ul>
       </div>
       <div>
         <h5 class="text-white font-semibold mb-2">Legal</h5>
         <ul class="space-y-2">
-          <li><a href="#" class="hover:text-white">Privacy</a></li>
-          <li><a href="#" class="hover:text-white">Terms</a></li>
+          <li><a href="#" class="hover:text-white transition">Privacy</a></li>
+          <li><a href="#" class="hover:text-white transition">Terms</a></li>
         </ul>
       </div>
     </div>
-    <div class="text-center mt-12 border-t border-gray-800 pt-6">
+    <div class="text-center mt-10 border-t border-white/10 pt-6">
       <p>&copy; 2025 Structura AI. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- Typing Animation Script -->
+  <!-- Scripts: typing, navbar blur, reveal on scroll, counters -->
   <script>
-    const textElement = document.getElementById("typing-text");
+    // Typing effect
+    const textEl = document.getElementById("typing-text");
     const phrases = [
       "Generate UML Diagrams Instantly",
       "Streamline Software Design",
       "Powered by Artificial Intelligence"
     ];
-    let index = 0, char = 0, isDeleting = false;
+    let pi = 0, ci = 0, deleting = false;
 
     function type() {
-      const current = phrases[index];
-      textElement.textContent = current.substring(0, char);
-      if (!isDeleting) {
-        if (char < current.length) {
-          char++;
-        } else {
-          isDeleting = true;
-          setTimeout(type, 1500);
-          return;
-        }
-      } else {
-        if (char > 0) {
-          char--;
-        } else {
-          isDeleting = false;
-          index = (index + 1) % phrases.length;
-        }
-      }
-      setTimeout(type, isDeleting ? 40 : 80);
+      const current = phrases[pi];
+      textEl.textContent = current.slice(0, ci);
+      if (!deleting && ci < current.length) ci++;
+      else if (!deleting && ci === current.length) deleting = true, setTimeout(type, 1400); 
+      else if (deleting && ci > 0) ci--;
+      else if (deleting && ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+      setTimeout(type, deleting ? 35 : 70);
     }
+    document.addEventListener("DOMContentLoaded", () => setTimeout(type, 600));
 
-    document.addEventListener("DOMContentLoaded", () => setTimeout(type, 500));
+    // Navbar blur on scroll
+    const nav = document.getElementById('nav');
+    const onScroll = () => {
+      if (window.scrollY > 6) {
+        nav.classList.add('backdrop-blur', 'bg-white/70', 'shadow-md');
+      } else {
+        nav.classList.remove('backdrop-blur', 'bg-white/70', 'shadow-md');
+      }
+    };
+    document.addEventListener('scroll', onScroll);
+    onScroll();
+
+    // Reveal on scroll (IntersectionObserver)
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('show');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    revealEls.forEach(el => io.observe(el));
+
+    // Animated counters
+    function animateCounter(el) {
+      const target = +el.getAttribute('data-counter');
+      const duration = 1200;
+      const start = 0;
+      const startTime = performance.now();
+      function tick(now) {
+        const p = Math.min((now - startTime) / duration, 1);
+        const val = Math.floor(start + (target - start) * p);
+        el.textContent = val + (target >= 100 ? '+' : '');
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    document.querySelectorAll('[data-counter]').forEach(animateCounter);
   </script>
-
 </body>
 </html>
