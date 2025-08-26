@@ -1,4 +1,5 @@
 Flask
+openai
 g4f
 plantuml
 python-dotenv
