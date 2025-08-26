@@ -13,102 +13,113 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UML Diagram Generator · Structura AI</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    /* Glass panel effect */
+    body {
+      background: radial-gradient(circle at 20% 30%, rgba(34,197,94,0.15), transparent 50%),
+                  radial-gradient(circle at 80% 70%, rgba(147,51,234,0.15), transparent 50%),
+                  #000;
+    }
     .glass {
-      backdrop-filter: blur(12px);
-      background: rgba(255, 255, 255, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(14px);
+      background: rgba(25, 25, 25, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 20px rgba(34,197,94,0.2), 0 0 40px rgba(147,51,234,0.15);
     }
-    /* Fade-in utility */
-    .fade-in {
-      opacity: 0;
-      animation: fadeIn 0.8s ease forwards;
-    }
+    .fade-in { animation: fadeIn 0.8s ease forwards; opacity: 0; }
     @keyframes fadeIn { to { opacity: 1; } }
 
-    /* Button hover scale */
-    .btn-transition:hover {
-      transform: scale(1.03);
-      transition: transform 0.2s ease;
+    .btn {
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      filter: brightness(1.1);
+    }
+    pre {
+      background: rgba(0,0,0,0.6);
+      color: #e2e8f0;
     }
 
-    /* Notification toast */
+    /* Toast */
     .toast {
       position: fixed;
       bottom: 1.5rem;
       right: 1.5rem;
-      background: #16a34a;
+      background: #10b981;
       color: #fff;
       padding: 0.75rem 1.25rem;
       border-radius: 0.5rem;
       display: none;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0 15px rgba(16,185,129,0.6);
       z-index: 50;
     }
   </style>
 </head>
-<body class="bg-gradient-to-tr from-green-50 to-white min-h-screen py-8 font-sans">
+<body class="min-h-screen py-8 font-sans text-gray-100 relative overflow-hidden">
 
-  <div class="container max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8">
+  <!-- Particle Background -->
+  <canvas id="particles" class="absolute inset-0"></canvas>
+  <div class="absolute inset-0 bg-black/70"></div>
+
+  <div class="container relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 px-6">
     <!-- Input Panel -->
     <div class="glass md:col-span-2 rounded-xl p-8 space-y-6 fade-in">
-      <h2 class="text-2xl font-bold text-gray-800">Generate UML Diagram</h2>
+      <h2 class="text-2xl font-bold text-emerald-400">Generate UML Diagram</h2>
       <form id="diagramForm" class="space-y-4">
         <div>
-          <label for="project_name" class="block text-sm font-medium text-gray-700">Project Title</label>
+          <label for="project_name" class="block text-sm font-medium text-gray-300">Project Title</label>
           <input type="text" id="project_name" name="project_name" required
-            class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 transition" />
+            class="mt-1 w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-emerald-400 transition" />
         </div>
         <div>
-          <label for="diagram_type" class="block text-sm font-medium text-gray-700">Diagram Type</label>
+          <label for="diagram_type" class="block text-sm font-medium text-gray-300">Diagram Type</label>
           <select id="diagram_type" name="diagram_type" required
-            class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+            class="mt-1 w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-violet-400 transition">
             {% for type in diagram_types %}<option value="{{ type }}">{{ type }}</option>{% endfor %}
           </select>
         </div>
         <div>
-          <label for="theme" class="block text-sm font-medium text-gray-700">Theme</label>
+          <label for="theme" class="block text-sm font-medium text-gray-300">Theme</label>
           <select id="theme" name="theme"
-            class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+            class="mt-1 w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-violet-400 transition">
             <option value="">Default Theme</option>
             {% for theme in themes %}<option value="{{ theme }}">{{ theme }}</option>{% endfor %}
           </select>
         </div>
         <button type="submit"
-          class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold btn-transition">Generate</button>
+          class="w-full bg-emerald-500 text-black py-3 rounded-lg font-semibold btn">Generate</button>
       </form>
-      <div id="error" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded-lg">
+      <div id="error" class="hidden bg-red-900/60 border border-red-500 text-red-200 px-4 py-2 rounded-lg">
         <span id="errorMessage"></span>
       </div>
     </div>
 
     <!-- Results / Loader Panel -->
-    <div class="space-y-6 md:col-span-3">
+    <div class="space-y-6 md:col-span-3 fade-in">
       <div id="loading" class="hidden flex items-center justify-center space-x-3">
-        <div class="animate-spin h-8 w-8 border-4 border-t-4 border-green-600 rounded-full"></div>
-        <span class="text-gray-600 font-medium">Generating diagram...</span>
+        <div class="animate-spin h-8 w-8 border-4 border-t-emerald-400 border-gray-700 rounded-full"></div>
+        <span class="text-gray-300 font-medium">Generating diagram...</span>
       </div>
 
-      <div id="results" class="hidden space-y-6 fade-in">
+      <div id="results" class="hidden space-y-6">
         <div class="glass rounded-xl p-6 shadow-md">
           <div class="flex justify-between items-center mb-4">
-            <h3 class="text-xl font-semibold text-gray-800">Generated Diagram</h3>
+            <h3 class="text-xl font-semibold text-emerald-400">Generated Diagram</h3>
             <button id="downloadButton"
-              class="bg-indigo-600 text-white px-4 py-2 rounded-lg btn-transition">Download</button>
+              class="bg-violet-500 text-white px-4 py-2 rounded-lg btn">Download</button>
           </div>
-          <img id="diagram" class="max-w-full h-auto rounded-lg border" alt="UML Diagram">
+          <img id="diagram" class="max-w-full h-auto rounded-lg border border-gray-700" alt="UML Diagram">
         </div>
 
         <div class="glass rounded-xl p-6 shadow-md">
           <div class="flex justify-between items-center mb-4">
-            <h3 class="text-xl font-semibold text-gray-800">PlantUML Syntax</h3>
+            <h3 class="text-xl font-semibold text-emerald-400">PlantUML Syntax</h3>
             <button id="copyButton"
-              class="bg-indigo-600 text-white px-4 py-2 rounded-lg btn-transition">Copy Code</button>
+              class="bg-violet-500 text-white px-4 py-2 rounded-lg btn">Copy Code</button>
           </div>
-          <pre id="syntax" class="bg-gray-100 p-4 rounded-lg overflow-x-auto"></pre>
+          <pre id="syntax" class="p-4 rounded-lg overflow-x-auto"></pre>
         </div>
       </div>
     </div>
@@ -174,6 +185,59 @@
       document.body.removeChild(link);
       showToast('Diagram downloaded!');
     });
+
+    // Particles background
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let particlesArray;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener("resize", function(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      init();
+    });
+
+    class Particle {
+      constructor(x, y, dx, dy, size, color) {
+        this.x = x; this.y = y; this.dx = dx; this.dy = dy; this.size = size; this.color = color;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+      update() {
+        if(this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
+        if(this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
+        this.x += this.dx;
+        this.y += this.dy;
+        this.draw();
+      }
+    }
+
+    function init(){
+      particlesArray = [];
+      for(let i=0; i<60; i++){
+        let size = Math.random()*2+1;
+        let x = Math.random()*(innerWidth-size*2);
+        let y = Math.random()*(innerHeight-size*2);
+        let dx = (Math.random()-0.5)*1.5;
+        let dy = (Math.random()-0.5)*1.5;
+        let color = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 0.6)`;
+        particlesArray.push(new Particle(x,y,dx,dy,size,color));
+      }
+    }
+    function animate(){
+      requestAnimationFrame(animate);
+      ctx.clearRect(0,0,innerWidth,innerHeight);
+      for(let i=0; i<particlesArray.length; i++){ particlesArray[i].update(); }
+    }
+    init();
+    animate();
   </script>
 </body>
 </html>
