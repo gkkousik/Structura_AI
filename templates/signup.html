@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7CHN2YWSKE"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -13,113 +13,169 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sign Up - Structura AI</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  
+  <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
     body {
-      background: linear-gradient(to top right, #d1fae5, #ffffff);
+      background: radial-gradient(circle at 20% 30%, rgba(34,197,94,0.15), transparent 50%),
+                  radial-gradient(circle at 80% 70%, rgba(147,51,234,0.15), transparent 50%),
+                  radial-gradient(circle at 50% 50%, rgba(59,130,246,0.15), transparent 70%);
+      background-color: #000;
     }
 
     .glass {
-      backdrop-filter: blur(15px);
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(16px);
+      background: rgba(30, 30, 30, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 20px rgba(34,197,94,.2), 0 0 40px rgba(147,51,234,.15);
     }
 
-    .input-focus:focus {
-      transform: scale(1.02);
-      transition: all 0.3s ease-in-out;
-      box-shadow: 0 0 8px rgba(72, 187, 120, 0.5);
-    }
-
-    input {
-      transition: all 0.2s ease-in-out;
-    }
-
-    button:hover {
-      transform: scale(1.03);
-      transition: all 0.3s ease-in-out;
+    .input-glow:focus {
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+      border-color: rgba(34, 197, 94, 0.6);
     }
 
     .logo-shadow {
-      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.5);
+      box-shadow: 0 0 25px rgba(34, 197, 94, 0.5);
     }
   </style>
 </head>
 
-<body class="flex items-center justify-center min-h-screen font-sans">
+<body class="flex items-center justify-center min-h-screen font-sans text-gray-100 relative overflow-hidden">
+
+  <!-- Particle Background -->
+  <canvas id="particles" class="absolute inset-0"></canvas>
+  <div class="absolute inset-0 bg-black/70"></div>
 
   <!-- Signup Card -->
-  <div class="glass w-full max-w-md p-8 rounded-xl shadow-2xl border border-green-100 text-gray-800">
-
-    <!-- Branding -->
+  <div class="glass relative z-10 w-full max-w-md p-8 rounded-xl text-gray-100">
+    
+    <!-- Logo and App Name -->
     <div class="flex flex-col items-center mb-6">
-      <img src="static/com_logo.png" alt="Structura AI Logo" class="h-16 w-16 rounded-full logo-shadow mb-2" />
-      <h1 class="text-2xl font-extrabold text-green-700">Structura AI</h1>
+      <img src="static/com_logo.png" alt="Structura AI Logo" class="h-16 w-16 rounded-full logo-shadow mb-3" />
+      <h1 class="text-2xl font-extrabold text-emerald-400">Structura AI</h1>
     </div>
 
-    <h2 class="text-xl font-bold mb-4 text-center">Create Your Account</h2>
+    <h2 class="text-lg font-semibold mb-4 text-center">Create Your Account</h2>
 
+    <!-- Error Message -->
     {% if error %}
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-      <strong>Error:</strong> {{ error }}
+    <div class="bg-red-900/60 border border-red-500 text-red-200 px-4 py-3 rounded mb-4">
+      <strong class="font-semibold">Error:</strong> {{ error }}
     </div>
     {% endif %}
 
+    <!-- Signup Form -->
     <form method="POST" action="/signup" class="space-y-4">
       <div>
-        <label class="block text-sm font-medium mb-1 text-gray-700">Username</label>
+        <label class="block text-sm font-medium mb-1 text-gray-300">Username</label>
         <input 
           type="text" 
           name="username" 
           required 
-          class="w-full px-4 py-2 border border-gray-300 rounded-md input-focus focus:outline-none focus:ring-2 focus:ring-green-400"
+          class="w-full px-4 py-2 border border-gray-700 bg-gray-900/70 rounded-md input-glow focus:outline-none focus:ring-0 transition"
         />
       </div>
 
       <div>
-        <label class="block text-sm font-medium mb-1 text-gray-700">Email</label>
+        <label class="block text-sm font-medium mb-1 text-gray-300">Email</label>
         <input 
           type="email" 
           name="email" 
           required 
-          class="w-full px-4 py-2 border border-gray-300 rounded-md input-focus focus:outline-none focus:ring-2 focus:ring-green-400"
+          class="w-full px-4 py-2 border border-gray-700 bg-gray-900/70 rounded-md input-glow focus:outline-none focus:ring-0 transition"
         />
       </div>
 
       <div>
-        <label class="block text-sm font-medium mb-1 text-gray-700">Phone Number</label>
+        <label class="block text-sm font-medium mb-1 text-gray-300">Phone Number</label>
         <input 
           type="tel" 
           name="phone" 
           required 
-          class="w-full px-4 py-2 border border-gray-300 rounded-md input-focus focus:outline-none focus:ring-2 focus:ring-green-400"
+          class="w-full px-4 py-2 border border-gray-700 bg-gray-900/70 rounded-md input-glow focus:outline-none focus:ring-0 transition"
         />
       </div>
 
       <div>
-        <label class="block text-sm font-medium mb-1 text-gray-700">Password</label>
+        <label class="block text-sm font-medium mb-1 text-gray-300">Password</label>
         <input 
           type="password" 
           name="password" 
           required 
-          class="w-full px-4 py-2 border border-gray-300 rounded-md input-focus focus:outline-none focus:ring-2 focus:ring-green-400"
+          class="w-full px-4 py-2 border border-gray-700 bg-gray-900/70 rounded-md input-glow focus:outline-none focus:ring-0 transition"
         />
       </div>
 
       <button 
         type="submit" 
-        class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-md transition-all duration-200 shadow-md"
+        class="w-full bg-emerald-500 hover:bg-emerald-600 text-black font-semibold py-2 rounded-md transition-all duration-200 shadow-md"
       >
         Sign Up
       </button>
     </form>
 
-    <p class="mt-4 text-center text-sm">
+    <!-- Login Link -->
+    <p class="mt-4 text-center text-sm text-gray-400">
       Already have an account?
-      <a href="/login" class="text-green-600 hover:underline font-medium">Login</a>
+      <a href="/login" class="text-emerald-400 hover:underline font-medium">Login</a>
     </p>
   </div>
+
+  <!-- Particle Animation -->
+  <script>
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let particlesArray;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener("resize", function(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      init();
+    });
+
+    class Particle {
+      constructor(x, y, dx, dy, size, color) {
+        this.x = x; this.y = y; this.dx = dx; this.dy = dy; this.size = size; this.color = color;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+      update() {
+        if(this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
+        if(this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
+        this.x += this.dx;
+        this.y += this.dy;
+        this.draw();
+      }
+    }
+
+    function init(){
+      particlesArray = [];
+      for(let i=0; i<60; i++){
+        let size = Math.random()*2+1;
+        let x = Math.random()*(innerWidth-size*2);
+        let y = Math.random()*(innerHeight-size*2);
+        let dx = (Math.random()-0.5)*1.5;
+        let dy = (Math.random()-0.5)*1.5;
+        let color = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 0.6)`;
+        particlesArray.push(new Particle(x,y,dx,dy,size,color));
+      }
+    }
+    function animate(){
+      requestAnimationFrame(animate);
+      ctx.clearRect(0,0,innerWidth,innerHeight);
+      for(let i=0; i<particlesArray.length; i++){ particlesArray[i].update(); }
+    }
+    init();
+    animate();
+  </script>
 
 </body>
 </html>
