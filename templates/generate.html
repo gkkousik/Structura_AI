@@ -30,30 +30,18 @@
     .fade-in { animation: fadeIn 0.8s ease forwards; opacity: 0; }
     @keyframes fadeIn { to { opacity: 1; } }
 
-    .btn {
-      transition: all 0.3s ease;
-    }
-    .btn:hover {
-      transform: scale(1.05);
-      filter: brightness(1.1);
-    }
+    .btn { transition: all 0.3s ease; }
+    .btn:hover { transform: scale(1.05); filter: brightness(1.1); }
+
     pre {
       background: rgba(0,0,0,0.6);
       color: #e2e8f0;
     }
-
-    /* Toast */
     .toast {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      background: #10b981;
-      color: #fff;
-      padding: 0.75rem 1.25rem;
-      border-radius: 0.5rem;
-      display: none;
-      box-shadow: 0 0 15px rgba(16,185,129,0.6);
-      z-index: 50;
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      background: #10b981; color: #fff;
+      padding: 0.75rem 1.25rem; border-radius: 0.5rem;
+      display: none; box-shadow: 0 0 15px rgba(16,185,129,0.6); z-index: 50;
     }
   </style>
 </head>
@@ -64,9 +52,12 @@
   <div class="absolute inset-0 bg-black/70"></div>
 
   <div class="container relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 px-6">
+    
     <!-- Input Panel -->
     <div class="glass md:col-span-2 rounded-xl p-8 space-y-6 fade-in">
       <h2 class="text-2xl font-bold text-emerald-400">Generate UML Diagram</h2>
+      
+      <!-- Existing structured form -->
       <form id="diagramForm" class="space-y-4">
         <div>
           <label for="project_name" class="block text-sm font-medium text-gray-300">Project Title</label>
@@ -91,6 +82,17 @@
         <button type="submit"
           class="w-full bg-emerald-500 text-black py-3 rounded-lg font-semibold btn">Generate</button>
       </form>
+
+      <!-- New AI-powered description form -->
+      <div class="pt-6 border-t border-gray-700">
+        <h3 class="text-xl font-semibold text-violet-400 mb-2">Or Generate from Description</h3>
+        <form id="aiForm" class="space-y-3">
+          <textarea id="uml_desc" name="uml_desc" rows="5" placeholder="E.g., A customer interacts with an ATM, which communicates with a Bank Server..."
+            class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-900/70 focus:outline-none focus:ring-2 focus:ring-violet-400 transition"></textarea>
+          <button type="submit" class="w-full bg-violet-500 text-white py-3 rounded-lg font-semibold btn">Generate with AI</button>
+        </form>
+      </div>
+
       <div id="error" class="hidden bg-red-900/60 border border-red-500 text-red-200 px-4 py-2 rounded-lg">
         <span id="errorMessage"></span>
       </div>
@@ -130,6 +132,7 @@
 
   <script>
     const form = document.getElementById('diagramForm');
+    const aiForm = document.getElementById('aiForm');
     const loading = document.getElementById('loading');
     const results = document.getElementById('results');
     const errorBox = document.getElementById('error');
@@ -145,14 +148,14 @@
       setTimeout(() => toast.style.display = 'none', 3000);
     }
 
-    form.addEventListener('submit', async e => {
+    async function handleSubmit(e, endpoint, body) {
       e.preventDefault();
       loading.classList.remove('hidden');
       errorBox.classList.add('hidden');
       results.classList.add('hidden');
 
       try {
-        const res = await fetch('/generate', { method: 'POST', body: new FormData(form) });
+        const res = await fetch(endpoint, { method: 'POST', body });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Generation failed');
         diagramImg.src = `data:image/png;base64,${data.diagram}`;
@@ -165,15 +168,16 @@
       } finally {
         loading.classList.add('hidden');
       }
-    });
+    }
+
+    form.addEventListener('submit', e => handleSubmit(e, '/generate', new FormData(form)));
+    aiForm.addEventListener('submit', e => handleSubmit(e, '/generate_from_text', new FormData(aiForm)));
 
     document.getElementById('copyButton').addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(syntaxPre.textContent);
         showToast('Code copied to clipboard!');
-      } catch {
-        showToast('Failed to copy code');
-      }
+      } catch { showToast('Failed to copy code'); }
     });
 
     document.getElementById('downloadButton').addEventListener('click', () => {
@@ -186,58 +190,39 @@
       showToast('Diagram downloaded!');
     });
 
-    // Particles background
+    // Particle background
     const canvas = document.getElementById("particles");
     const ctx = canvas.getContext("2d");
     let particlesArray;
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     window.addEventListener("resize", function(){
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      init();
+      canvas.width = window.innerWidth; canvas.height = window.innerHeight; init();
     });
-
     class Particle {
       constructor(x, y, dx, dy, size, color) {
         this.x = x; this.y = y; this.dx = dx; this.dy = dy; this.size = size; this.color = color;
       }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2, false);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-      }
-      update() {
-        if(this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
-        if(this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
-        this.x += this.dx;
-        this.y += this.dy;
-        this.draw();
-      }
+      draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2, false);
+        ctx.fillStyle = this.color; ctx.fill(); }
+      update() { if(this.x+this.size>canvas.width||this.x-this.size<0) this.dx=-this.dx;
+        if(this.y+this.size>canvas.height||this.y-this.size<0) this.dy=-this.dy;
+        this.x+=this.dx; this.y+=this.dy; this.draw(); }
     }
-
     function init(){
-      particlesArray = [];
-      for(let i=0; i<60; i++){
-        let size = Math.random()*2+1;
-        let x = Math.random()*(innerWidth-size*2);
-        let y = Math.random()*(innerHeight-size*2);
-        let dx = (Math.random()-0.5)*1.5;
-        let dy = (Math.random()-0.5)*1.5;
-        let color = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 0.6)`;
+      particlesArray=[]; for(let i=0;i<60;i++){
+        let size=Math.random()*2+1;
+        let x=Math.random()*(innerWidth-size*2);
+        let y=Math.random()*(innerHeight-size*2);
+        let dx=(Math.random()-0.5)*1.5;
+        let dy=(Math.random()-0.5)*1.5;
+        let color=`rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 0.6)`;
         particlesArray.push(new Particle(x,y,dx,dy,size,color));
       }
     }
-    function animate(){
-      requestAnimationFrame(animate);
+    function animate(){ requestAnimationFrame(animate);
       ctx.clearRect(0,0,innerWidth,innerHeight);
-      for(let i=0; i<particlesArray.length; i++){ particlesArray[i].update(); }
-    }
-    init();
-    animate();
+      for(let i=0;i<particlesArray.length;i++){ particlesArray[i].update(); } }
+    init(); animate();
   </script>
 </body>
 </html>
