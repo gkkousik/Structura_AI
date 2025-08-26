@@ -1,92 +1,55 @@
-from flask import Flask, render_template, request, redirect, url_for, session
-from openai import OpenAI
 import os
-import json
+from flask import Flask, render_template, request
+import openai
+from dotenv import load_dotenv
+
+# Load .env file in local dev (Render will already provide env vars)
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.getenv("SECRET_KEY", "dev_secret")  # load from env in production
 
-# Load users
-if os.path.exists("users.json"):
-    with open("users.json", "r") as f:
-        users = json.load(f)
-else:
-    users = {}
-
-# Configure OpenAI
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# Set API key from environment variable
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @app.route("/")
-def home():
+def index():
     return render_template("index.html")
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-
-        if username in users and users[username] == password:
-            session["user"] = username
-            return redirect(url_for("generate"))
-        else:
-            return render_template("login.html", error="Invalid credentials")
-
-    return render_template("login.html")
-
-@app.route("/signup", methods=["GET", "POST"])
-def signup():
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-
-        if username in users:
-            return render_template("signup.html", error="User already exists")
-        else:
-            users[username] = password
-            with open("users.json", "w") as f:
-                json.dump(users, f)
-            return redirect(url_for("login"))
-
-    return render_template("signup.html")
-
-@app.route("/logout")
-def logout():
-    session.pop("user", None)
-    return redirect(url_for("home"))
 
 @app.route("/generate")
 def generate():
-    if "user" not in session:
-        return redirect(url_for("login"))
-    return render_template("generate.html")
+    return render_template("generate.html", uml_code=None)
 
 @app.route("/generate_from_text", methods=["POST"])
 def generate_from_text():
-    description = request.form.get("uml_desc")
+    description = request.form.get("uml_desc", "")
+
+    if not description.strip():
+        return render_template(
+            "generate.html",
+            uml_code="⚠️ Please enter a valid description."
+        )
 
     prompt = f"""
-    Convert the following description into PlantUML code for a UML diagram:
+    Convert the following description into PlantUML code for a UML diagram.
+    Only return valid PlantUML code wrapped between @startuml and @enduml.
     Description: {description}
-    Only return valid PlantUML code between @startuml and @enduml.
     """
 
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-4o-mini",   # or gpt-4o / gpt-3.5-turbo depending on your plan
-            messages=[{"role": "user", "content": prompt}]
+            model="gpt-4o-mini",  # you can switch to gpt-4o or gpt-3.5-turbo
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=800
         )
-        plantuml_code = response.choices[0].message["content"]
+        plantuml_code = response.choices[0].message["content"].strip()
 
         return render_template("generate.html", uml_code=plantuml_code)
 
     except Exception as e:
-        # Debug: print the error so you know what failed
-        return render_template("generate.html", uml_code=f"⚠️ Error: {str(e)}")
-
-    except Exception as e:
-        print("Error:", e)  # log for debugging
-        return render_template("generate.html", uml_code=f"Error generating diagram: {e}")
+        return render_template(
+            "generate.html",
+            uml_code=f"⚠️ Error occurred: {str(e)}"
+        )
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
