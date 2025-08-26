@@ -1,17 +1,20 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-import openai
+from openai import OpenAI
 import os
 import json
 
 app = Flask(__name__)
-app.secret_key = "your_secret_key_here"  # replace with a strong secret key
+app.secret_key = os.getenv("SECRET_KEY", "dev_secret")  # load from env in production
 
 # Load users
-with open("users.json", "r") as f:
-    users = json.load(f)
+if os.path.exists("users.json"):
+    with open("users.json", "r") as f:
+        users = json.load(f)
+else:
+    users = {}
 
 # Configure OpenAI
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 @app.route("/")
 def home():
@@ -72,19 +75,18 @@ def generate_from_text():
     """
 
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4o-mini",   # can change to gpt-4o or gpt-5 if available
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",   # change to gpt-4o / gpt-5 if enabled
             messages=[{"role": "user", "content": prompt}]
         )
-        plantuml_code = response.choices[0].message["content"]
+        plantuml_code = response.choices[0].message.content.strip()
 
         return render_template("generate.html", uml_code=plantuml_code)
 
     except Exception as e:
+        print("Error:", e)  # log for debugging
         return render_template("generate.html", uml_code=f"Error generating diagram: {e}")
-
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
-
