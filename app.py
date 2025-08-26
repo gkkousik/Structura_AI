@@ -63,9 +63,6 @@ def generate():
 
 @app.route("/generate_from_text", methods=["POST"])
 def generate_from_text():
-    if "user" not in session:
-        return redirect(url_for("login"))
-
     description = request.form.get("uml_desc")
 
     prompt = f"""
@@ -75,13 +72,17 @@ def generate_from_text():
     """
 
     try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",   # change to gpt-4o / gpt-5 if enabled
+        response = openai.ChatCompletion.create(
+            model="gpt-4o-mini",   # or gpt-4o / gpt-3.5-turbo depending on your plan
             messages=[{"role": "user", "content": prompt}]
         )
-        plantuml_code = response.choices[0].message.content.strip()
+        plantuml_code = response.choices[0].message["content"]
 
         return render_template("generate.html", uml_code=plantuml_code)
+
+    except Exception as e:
+        # Debug: print the error so you know what failed
+        return render_template("generate.html", uml_code=f"⚠️ Error: {str(e)}")
 
     except Exception as e:
         print("Error:", e)  # log for debugging
