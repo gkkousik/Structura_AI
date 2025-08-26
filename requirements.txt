@@ -1,8 +1,9 @@
 Flask
+Werkzeug
 openai
 g4f
 plantuml
 python-dotenv
 requests
-Werkzeug
 six
+gunicorn
