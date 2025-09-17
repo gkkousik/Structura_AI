@@ -55,7 +55,10 @@ Designing UML diagrams shouldn't be a bottleneck. Structura-AI empowers you to:
 
 | Prompt Input Panel                                                                                   | UML Diagram Output                                                                                   | Mobile View                                                                                             |
 |------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
-| ![Prompt Input](https://github.com/user-attachments/assets/03867456-5a78-419f-b943-5c426df9790b)     | ![Diagram Output](https://github.com/user-attachments/assets/13b9258d-0963-4149-88b6-c6f3ea609538)    | ![Mobile View](https://github.com/user-attachments/assets/ac057a4b-0f00-4012-a351-41274002a4f4)          |
+| ![Prompt Input](<img width="649" height="552" alt="image" src="https://github.com/user-attachments/assets/61676248-51c1-4d4f-b700-24502aba46b2" />
+)     | ![Diagram Output](<img width="934" height="721" alt="image" src="https://github.com/user-attachments/assets/32acbc03-7ad3-4c67-8944-170dfaa67f90" />
+)    | ![Mobile View](![WhatsApp Image 2025-09-17 at 19 17 14_274a80e5](https://github.com/user-attachments/assets/cdf00602-2ef2-4446-aa30-1f999329f612)
+)          |
 
 ---
 
